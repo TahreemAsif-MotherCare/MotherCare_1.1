@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.mothercare">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logo"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".Views.Activities.OrderHistoryActivity"></activity>
+        <activity android:name=".Views.Activities.CartActivity" />
+        <activity android:name=".Views.Activities.MedicinesActivity"></activity>
+        <activity android:name=".Views.Activities.PharmacistMedicinesActivity" />
+        <activity android:name=".Views.TestActivity" />
+        <activity android:name=".Views.Activities.PharmacyActivity" />
+        <activity android:name=".Views.Activities.SymptomsActivity" />
+        <activity android:name=".Views.Activities.ChangeDoctorAccountSettings" />
+        <activity android:name=".Views.Activities.ChangePatientAccountSettingsActivity" />
+        <activity android:name=".Views.Activities.PatientProfile" />
+        <activity
+            android:name=".Views.Activities.DashboardActivity"
+            android:label="@string/title_activity_dashboard"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/places_api_key" />
+
+        <activity android:name=".Views.Activities.InformationActivity" />
+        <activity android:name=".Views.Activities.DoctorChatActivity" />
+        <activity android:name=".Views.Activities.PatientChatActivity" />
+        <activity android:name=".Views.Activities.DiscussionActivity" />
+        <activity android:name=".Views.Activities.FindDoctor" />
+        <activity android:name=".Views.Activities.ViewReportsForPatient" />
+        <activity android:name=".Views.Activities.AddReportsActivity" />
+        <activity android:name=".Views.Activities.ViewAppointmentRequests" />
+        <activity android:name=".Views.Activities.LocationActivity" />
+        <activity android:name=".Views.Activities.AddedDoctorsActivity" />
+        <activity android:name=".Views.Activities.MedicineRemindersActivity" />
+        <activity android:name=".Views.Activities.ViewAppointmentsActivity" />
+        <activity android:name=".Views.Activities.AddedPatientsActivity" />
+        <activity android:name=".Views.Activities.AppointmentActivity" />
+        <activity android:name=".Views.Activities.RequestsActivity" />
+        <activity android:name=".Views.Activities.DoctorProfileActivity" />
+        <activity android:name=".Views.Activities.ForgotPassword" />
+        <activity android:name=".Views.Activities.YourDoctor" />
+        <activity android:name=".Views.Activities.SignupActivity" />
+        <activity android:name=".Views.Activities.LoginActivity" />
+        <activity android:name=".Views.Activities.MainActivity" />
+        <activity android:name=".Views.Activities.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".Utilities$RingtonePlayingService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <receiver android:name=".Utilities.MedicationNotificationReciever">
+            <intent-filter>
+                <action android:name="Turn Off" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".Utilities.AppointmentNotificationReciever" />
+        <receiver android:name=".Utilities.StopService" />
+        <receiver android:name=".Utilities.RegenerateMedicationNotification" />
+    </application>
+
+</manifest>

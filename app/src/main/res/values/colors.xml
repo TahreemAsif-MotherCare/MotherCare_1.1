@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FE1846</color>
+    <color name="colorPrimaryDark">#F36E17</color>
+    <color name="colorAccent">#00838F</color>
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
+    <color name="doctor_gradient_light">#039BE5</color>
+    <color name="pink">#FFEBEB</color>
+</resources>

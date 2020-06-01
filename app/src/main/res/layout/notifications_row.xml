@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/notificationIcon"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_margin="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_medication_schdule" />
+
+    <TextView
+        android:id="@+id/notificationTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notification Title"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/notificationIcon"
+        app:layout_constraintTop_toTopOf="@id/notificationIcon" />
+
+    <TextView
+        android:id="@+id/notificationDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Jdjdmfsdfsdf fjdskjfsdjfsdfol dkfjsdjfsfsdkf djfsdjfosdjfsoj"
+        app:layout_constraintBottom_toBottomOf="@id/notificationIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/notificationIcon"
+        app:layout_constraintTop_toBottomOf="@id/notificationTitle" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.4px"
+        android:layout_gravity="center"
+        android:layout_marginTop="20sp"
+        android:background="#e0e0e0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/notificationIcon" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

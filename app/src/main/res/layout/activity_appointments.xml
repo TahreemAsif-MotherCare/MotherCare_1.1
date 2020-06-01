@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp"
+    tools:context=".Views.Activities.AppointmentActivity">
+
+    <TextView
+        android:id="@+id/appointmentTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="Appointments"
+        android:textColor="#000080 "
+        android:textSize="22sp" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/appointments_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appointmentTV"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="26pt"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+    <TextView
+        android:id="@+id/noAppointment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appointments_recyclerView"
+        android:padding="20dp"
+        android:paddingLeft="20dp"
+        android:text="No appointment found! "
+        android:textSize="15dp"
+        android:visibility="gone" />
+
+</RelativeLayout>

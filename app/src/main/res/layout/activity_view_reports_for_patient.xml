@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Views.Activities.AddReportsActivity">
+
+    <TextView
+        android:id="@+id/sharedReports"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="Shared Reports"
+        android:textColor="@color/colorPrimary"
+        android:textSize="22sp" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sharedReportsPatientRecylerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sharedReports"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="26pt"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+    <TextView
+        android:id="@+id/noReportsSharedPatient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/noReportsSharedPatient"
+        android:padding="20dp"
+        android:paddingLeft="20dp"
+        android:text="No Shared Reports! "
+        android:textSize="15dp"
+        android:visibility="gone" />
+
+</RelativeLayout>
