@@ -40,6 +40,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutResource());
     }
 
+    public void test() {
+    }
+
     protected abstract int getLayoutResource();
 
     @Override
