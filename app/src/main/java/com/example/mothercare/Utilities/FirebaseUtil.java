@@ -503,7 +503,7 @@ public class FirebaseUtil {
             rootRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    final ArrayList<Request> addedDoctorArrayList = new ArrayList();
+                    final ArrayList<Request> addedDoctorArrayList = new ArrayList<>();
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         Request addedDoctor = postSnapshot.getValue(Request.class);
                         if (addedDoctor.patientID.equals(getCurrentUserID()))
@@ -549,7 +549,7 @@ public class FirebaseUtil {
             rootRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    final ArrayList<Request> addedPatientsArrayList = new ArrayList();
+                    final ArrayList<Request> addedPatientsArrayList = new ArrayList<>();
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         Request addedPatient = postSnapshot.getValue(Request.class);
                         if (addedPatient.doctorID.equals(getCurrentUserID()))
@@ -925,6 +925,26 @@ public class FirebaseUtil {
         });
     }
 
+    public void uploadPrescriptionPicture(Bitmap bitmap, final String orderID) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference mountainImagesRef = FirebaseStorage.getInstance().getReference().child("Prescriptions").
+                child(orderID);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
+        byte[] data = baos.toByteArray();
+        UploadTask uploadTask = mountainImagesRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                firebaseResponse.firebaseResponse(orderID, FirebaseResponses.uploadPrescription);
+            }
+        });
+    }
+
     public void getAllMedicines() {
         final ArrayList<Medicine> medicineArrayList = new ArrayList<>();
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("Medicines");
@@ -987,6 +1007,30 @@ public class FirebaseUtil {
 
             }
         });
+    }
+
+    public void getPharmacies() {
+        final ArrayList<Pharmacist> pharmacistArrayList = new ArrayList<>();
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("Pharmacist");
+        try {
+            rootRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Pharmacist pharmacist = postSnapshot.getValue(Pharmacist.class);
+                        pharmacistArrayList.add(pharmacist);
+                    }
+                    firebaseResponse.firebaseResponse(pharmacistArrayList, FirebaseResponses.Pharmacist);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    firebaseResponse.firebaseResponse(databaseError.getMessage(), FirebaseResponses.Error);
+                }
+            });
+        } catch (Exception e) {
+            Log.d("Reports: ", e.getMessage());
+        }
     }
 
     public interface FirebaseResponse<T> {

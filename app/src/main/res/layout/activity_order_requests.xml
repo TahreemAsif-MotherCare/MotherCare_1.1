@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views.Activities.OrderHistoryActivity">
+    tools:context=".Views.Activities.OrderRequestsActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/orderHistoryRecyclerView"
+        android:id="@+id/orderRequestsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
@@ -17,15 +17,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/noOrderHisTV"
+        android:id="@+id/noOrderReqTV"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="10dp"
-        android:text="No Orders Placed!"
+        android:text="No Order Requests Found!"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

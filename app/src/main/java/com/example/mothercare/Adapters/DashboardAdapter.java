@@ -23,6 +23,7 @@ import com.example.mothercare.Views.Activities.FindDoctor;
 import com.example.mothercare.Views.Activities.InformationActivity;
 import com.example.mothercare.Views.Activities.MedicineRemindersActivity;
 import com.example.mothercare.Views.Activities.OrderHistoryActivity;
+import com.example.mothercare.Views.Activities.OrderRequestsActivity;
 import com.example.mothercare.Views.Activities.PharmacistMedicinesActivity;
 import com.example.mothercare.Views.Activities.RequestsActivity;
 import com.example.mothercare.Views.Activities.SymptomsActivity;
@@ -151,6 +152,9 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
                     context.startActivity(intent);
                 } else if (holder.title.getText().toString().equalsIgnoreCase("Medicines")) {
                     Intent intent = new Intent(context, PharmacistMedicinesActivity.class);
+                    context.startActivity(intent);
+                } else if (holder.title.getText().toString().equalsIgnoreCase("Order Requests")) {
+                    Intent intent = new Intent(context, OrderRequestsActivity.class);
                     context.startActivity(intent);
                 }
             }

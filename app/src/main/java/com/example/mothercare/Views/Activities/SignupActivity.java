@@ -44,7 +44,7 @@ public class SignupActivity extends BaseActivity {
     Button signUp;
     Spinner userRole;
     TextView loginText;
-    LinearLayout doctorRegistrationForm, patientRegistrationForm;
+    LinearLayout doctorRegistrationForm, patientRegistrationForm, pharmacyRegForm;
     private static Uri selectedImage;
     private static Bitmap bitmap;
     private static final int GET_FROM_GALLERY = 101;
@@ -55,7 +55,7 @@ public class SignupActivity extends BaseActivity {
     private String mondayStartTime, mondayEndTime, tuesdayStartTime, tuesdayEndTime, wedStartTime, wedEndTime, thuStartTime, thuEndTime, friStartTime,
             friEndTime, satStartTime, satEndTime, sunStartTime, sunEndTime;
     EditText name, email, password, confirmPassword, phoneNumber, address, qualification, specialization, institute, worksAt, month, trimester, week, charges;
-    ImageView profileImageView, scheduleImageView, locationImageView;
+    ImageView profileImageView, scheduleImageView, locationImageView, pharmacyLoc;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     private int PLACE_PICKER_REQUEST = 1;
     UserLocation location = null;
@@ -76,6 +76,7 @@ public class SignupActivity extends BaseActivity {
                 } else if (userRole.getSelectedItem().equals("Pharmacy")) {
                     patientRegistrationForm.setVisibility(View.GONE);
                     doctorRegistrationForm.setVisibility(View.GONE);
+                    pharmacyRegForm.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -151,12 +152,20 @@ public class SignupActivity extends BaseActivity {
                 startActivityForResult(i, PLACE_PICKER_REQUEST);
             }
         });
+        pharmacyLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(SignupActivity.this, LocationPickerActivity.class);
+                startActivityForResult(i, PLACE_PICKER_REQUEST);
+            }
+        });
     }
 
     private void init() {
         signUp = findViewById(R.id.nextButton);
         doctorRegistrationForm = findViewById(R.id.doctorsRegistrationInformation);
         patientRegistrationForm = findViewById(R.id.patientRegistrationInformation);
+        pharmacyRegForm = findViewById(R.id.pharmacyRegistrationInformation);
         name = findViewById(R.id.userName);
         email = findViewById(R.id.signupEmail);
         password = findViewById(R.id.signupPassword);
@@ -172,6 +181,7 @@ public class SignupActivity extends BaseActivity {
         profileImageView = findViewById(R.id.profilePictureImageView);
         scheduleImageView = findViewById(R.id.scheduleImageView);
         locationImageView = findViewById(R.id.locationImageView);
+        pharmacyLoc = findViewById(R.id.locationImageView_pharmacy);
         trimester = findViewById(R.id.trimester);
         month = findViewById(R.id.pregnancyMonth);
         week = findViewById(R.id.week);
@@ -624,6 +634,12 @@ public class SignupActivity extends BaseActivity {
                 locationImageView.requestFocus();
                 return false;
             }
+        } else if (pharmacyRegForm.getVisibility() == View.VISIBLE) {
+            if (location == null) {
+                showToast("Please pick your location");
+                pharmacyLoc.requestFocus();
+                return false;
+            }
         }
         return true;
     }
@@ -662,6 +678,7 @@ public class SignupActivity extends BaseActivity {
     private Pharmacist getPharmacistData() {
         Pharmacist pharmacist = new Pharmacist("", name.getText().toString(), email.getText().toString(), phoneNumber.getText().toString()
                 , address.getText().toString());
+        pharmacist.setLocation(location);
         pharmacist.setProfilePic(bitmap);
         return pharmacist;
     }

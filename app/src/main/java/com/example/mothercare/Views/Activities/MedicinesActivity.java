@@ -1,5 +1,7 @@
 package com.example.mothercare.Views.Activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +13,6 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,8 @@ import com.example.mothercare.Adapters.ListViewAdapter;
 import com.example.mothercare.BaseActivity;
 import com.example.mothercare.Enumeratios.FirebaseResponses;
 import com.example.mothercare.Models.Medicine;
+import com.example.mothercare.Models.Pharmacist;
+import com.example.mothercare.Models.UserLocation;
 import com.example.mothercare.R;
 import com.example.mothercare.Utilities.FirebaseUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,12 +36,14 @@ public class MedicinesActivity extends BaseActivity implements SearchView.OnQuer
     ListView list;
     ListViewAdapter adapter;
     SearchView editsearch;
-    TextView sortByPrice;
+    TextView sortByPrice, noMedFound, showResults;
     BottomNavigationView bottomNavigationView;
-    String[] animalNameList;
     ArrayList<Medicine> arraylist = new ArrayList<Medicine>();
     private RecyclerView medicineRecyclerView;
     FirebaseUtil firebaseUtil;
+    int radius = 5;
+    int checkedItem = 0;
+    ArrayList<Pharmacist> pharmacies = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +51,15 @@ public class MedicinesActivity extends BaseActivity implements SearchView.OnQuer
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         searchMedicineLayout = findViewById(R.id.searchMedicineLayout);
         sortByPrice = findViewById(R.id.sortByPrice);
+        showResults = findViewById(R.id.showResultsTV);
+        getSupportActionBar().setTitle("Medicines");
+        noMedFound = findViewById(R.id.noMedFound);
         int width = getResources().getDisplayMetrics().widthPixels;
         int hei = getResources().getDisplayMetrics().heightPixels / 4;
-        searchMedicineLayout.setLayoutParams(new ConstraintLayout.LayoutParams(width, hei));
+//        searchMedicineLayout.setLayoutParams(new ConstraintLayout.LayoutParams(width, hei));
         firebaseUtil = new FirebaseUtil(this);
         firebaseUtil.setFirebaseResponse(this);
-        firebaseUtil.getAllMedicines();
+        firebaseUtil.getPharmacies();
 
         medicineRecyclerView = findViewById(R.id.listview);
 
@@ -79,6 +87,44 @@ public class MedicinesActivity extends BaseActivity implements SearchView.OnQuer
                 adapter = new ListViewAdapter(MedicinesActivity.this, arraylist, "Patient");
                 adapter.notifyDataSetChanged();
                 medicineRecyclerView.setAdapter(adapter);
+            }
+        });
+
+        showResults.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(MedicinesActivity.this);
+                alertDialog.setTitle("Show Results from");
+                String[] items = {"5km", "10km", "Show All Results"};
+
+                alertDialog.setSingleChoiceItems(items, checkedItem, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                radius = 5;
+                                firebaseUtil.getPharmacies();
+                                checkedItem = 0;
+                                dialog.dismiss();
+                                break;
+                            case 1:
+                                radius = 10;
+                                firebaseUtil.getPharmacies();
+                                checkedItem = 1;
+                                dialog.dismiss();
+                                break;
+                            case 2:
+                                radius = 2000;
+                                firebaseUtil.getPharmacies();
+                                checkedItem = 2;
+                                dialog.dismiss();
+                                break;
+                        }
+                    }
+                });
+                AlertDialog alert = alertDialog.create();
+                alert.setCanceledOnTouchOutside(false);
+                alert.show();
             }
         });
 
@@ -115,13 +161,45 @@ public class MedicinesActivity extends BaseActivity implements SearchView.OnQuer
     @Override
     public void firebaseResponse(Object o, FirebaseResponses firebaseResponses) {
         switch (firebaseResponses) {
+            case Pharmacist: {
+                ArrayList<Pharmacist> pharmacistArrayList = (ArrayList<Pharmacist>) o;
+
+                UserLocation userLocation = getLocation();
+                for (Pharmacist pharmacist : pharmacistArrayList) {
+                    if (distance(userLocation.latitude, userLocation.longitude, pharmacist.getLocation().latitude, pharmacist.getLocation().longitude) < radius) {
+                        pharmacies.add(pharmacist);
+                    }
+                }
+                firebaseUtil.getAllMedicines();
+                break;
+            }
             case getMedicines: {
                 ArrayList<Medicine> medicineArrayList = (ArrayList<Medicine>) o;
-                GridLayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
-                medicineRecyclerView.setLayoutManager(mLayoutManager);
-                medicineRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                adapter = new ListViewAdapter(this, medicineArrayList, "Patient");
-                medicineRecyclerView.setAdapter(adapter);
+                ArrayList<Medicine> medicines = new ArrayList<>();
+                if (radius != 2000) {
+                    for (Medicine medicine : medicineArrayList) {
+                        for (Pharmacist pharmacist : pharmacies) {
+                            if (!medicine.pharmacyID.equals(pharmacist.pharmacistID)) {
+                                medicines.add(medicine);
+                            }
+                        }
+                    }
+                } else
+                    medicines = medicineArrayList;
+                if (medicines.isEmpty()) {
+                    noMedFound.setVisibility(View.VISIBLE);
+                    medicineRecyclerView.setVisibility(View.GONE);
+                } else {
+                    if (noMedFound.getVisibility() == View.VISIBLE) {
+                        noMedFound.setVisibility(View.GONE);
+                        medicineRecyclerView.setVisibility(View.VISIBLE);
+                    }
+                    GridLayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
+                    medicineRecyclerView.setLayoutManager(mLayoutManager);
+                    medicineRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                    adapter = new ListViewAdapter(this, medicines, "Patient");
+                    medicineRecyclerView.setAdapter(adapter);
+                }
                 showHideProgress(false, "");
                 break;
             }

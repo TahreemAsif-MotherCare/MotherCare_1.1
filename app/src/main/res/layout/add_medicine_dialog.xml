@@ -10,6 +10,7 @@
         android:id="@+id/medicinePicture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxHeight="200dp"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/ic_upload_pic" />
 

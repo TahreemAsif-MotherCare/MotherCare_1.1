@@ -174,6 +174,9 @@ public class DashboardFragment extends Fragment implements FirebaseUtil.Firebase
             Dashboard dashboardItem = new Dashboard("Medicines", R.drawable.ic_medicine);
             dashboardItemList.add(dashboardItem);
 
+            dashboardItem = new Dashboard("Order Requests", R.drawable.ic_medicine);
+            dashboardItemList.add(dashboardItem);
+
             dashboardItem = new Dashboard("Order History", R.drawable.ic_appointments);
             dashboardItemList.add(dashboardItem);
 

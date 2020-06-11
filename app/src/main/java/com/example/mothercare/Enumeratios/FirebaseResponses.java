@@ -26,6 +26,7 @@ public enum FirebaseResponses {
     ChatMessages,
     Pharmacist,
     getMedicines,
+    uploadPrescription,
     getOrderHistory;
 
 }

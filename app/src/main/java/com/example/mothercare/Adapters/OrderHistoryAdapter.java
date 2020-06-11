@@ -23,7 +23,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     String pharmacyName, medicines;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView orderID, orderedBy, pharmacyName, orderDate, address, phoneNumber, medicines, orderPrice;
+        TextView orderID, orderedBy, pharmacyName, orderDate, address, phoneNumber, medicines, orderPrice, orderStatus;
 
         public MyViewHolder(View view) {
             super(view);
@@ -35,6 +35,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
             orderPrice = (TextView) view.findViewById(R.id.orderPrice);
             address = (TextView) view.findViewById(R.id.orderAdress);
             phoneNumber = (TextView) view.findViewById(R.id.phoneNumber);
+            orderStatus = (TextView) view.findViewById(R.id.orderStatus);
         }
     }
 
@@ -66,6 +67,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
         holder.orderDate.setText(order.orderDate);
         holder.address.setText(order.patient.email);
         holder.phoneNumber.setText(order.patient.phoneNumber);
+        holder.orderStatus.setText(order.getOrderStatus());
     }
 
     @Override

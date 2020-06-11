@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 public class Pharmacist {
     public String pharmacistID, username, email, phoneNumber, address;
     public Bitmap profilePic;
+    public UserLocation location;
 
     public Pharmacist() {
     }
@@ -15,6 +16,14 @@ public class Pharmacist {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
+    }
+
+    public UserLocation getLocation() {
+        return location;
+    }
+
+    public void setLocation(UserLocation location) {
+        this.location = location;
     }
 
     public void setProfilePic(Bitmap profilePic) {

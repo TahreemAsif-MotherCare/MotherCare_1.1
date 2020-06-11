@@ -23,9 +23,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".Views.Activities.OrderHistoryActivity"></activity>
+        <activity android:name=".Views.Activities.PrescriptionPicActivity"></activity>
+        <activity android:name=".Views.Activities.OrderRequestsActivity" />
+        <activity android:name=".Views.Activities.OrderHistoryActivity" />
         <activity android:name=".Views.Activities.CartActivity" />
-        <activity android:name=".Views.Activities.MedicinesActivity"></activity>
+        <activity android:name=".Views.Activities.MedicinesActivity" />
         <activity android:name=".Views.Activities.PharmacistMedicinesActivity" />
         <activity android:name=".Views.TestActivity" />
         <activity android:name=".Views.Activities.PharmacyActivity" />
