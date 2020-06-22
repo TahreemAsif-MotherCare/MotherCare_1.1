@@ -4,6 +4,7 @@ public class Medicine {
     public String medicineName, medicineDose, pharmacyName, pharmacyID;
     public int price, stockQuantity, cartQuantity;
     public String medicineID;
+    private int count = 1;
 
     public Medicine() {
     }
@@ -32,5 +33,13 @@ public class Medicine {
 
     public int getCartQuantity() {
         return cartQuantity;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

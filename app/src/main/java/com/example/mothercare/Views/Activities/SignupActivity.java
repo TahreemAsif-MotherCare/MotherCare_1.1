@@ -26,6 +26,7 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.example.mothercare.BaseActivity;
 import com.example.mothercare.Models.Doctor;
+import com.example.mothercare.Models.EmergencyContact;
 import com.example.mothercare.Models.Patient;
 import com.example.mothercare.Models.Pharmacist;
 import com.example.mothercare.Models.UserLocation;
@@ -139,6 +140,9 @@ public class SignupActivity extends BaseActivity {
                         showHideProgress(true, "Please Wait");
                     } else if (userRole.getSelectedItem().equals("Pharmacy")) {
                         firebaseUtil.signUpPharmacist(getPharmacistData(), password.getText().toString());
+                        showHideProgress(true, "Please Wait");
+                    } else if (userRole.getSelectedItem().equals("Emergency Service")) {
+                        firebaseUtil.signUpEmergencyContact(getEmergencyData(), password.getText().toString());
                         showHideProgress(true, "Please Wait");
                     }
                 }
@@ -681,6 +685,12 @@ public class SignupActivity extends BaseActivity {
         pharmacist.setLocation(location);
         pharmacist.setProfilePic(bitmap);
         return pharmacist;
+    }
+
+    private EmergencyContact getEmergencyData() {
+        EmergencyContact emergencyContact = new EmergencyContact("", name.getText().toString(), email.getText().toString(), phoneNumber.getText().toString());
+        emergencyContact.setProfilePic(bitmap);
+        return emergencyContact;
     }
 
     private static boolean isValid(String email) {

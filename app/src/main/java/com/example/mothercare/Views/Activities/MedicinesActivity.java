@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class MedicinesActivity extends BaseActivity implements SearchView.OnQueryTextListener, FirebaseUtil.FirebaseResponse {
+public class MedicinesActivity extends BaseActivity implements SearchView.OnQueryTextListener, FirebaseUtil.FirebaseResponse, CartActivity.UpdateMedicinesData {
     LinearLayout searchMedicineLayout;
     ListView list;
     ListViewAdapter adapter;
@@ -56,6 +56,9 @@ public class MedicinesActivity extends BaseActivity implements SearchView.OnQuer
         noMedFound = findViewById(R.id.noMedFound);
         int width = getResources().getDisplayMetrics().widthPixels;
         int hei = getResources().getDisplayMetrics().heightPixels / 4;
+
+        CartActivity cartActivity = new CartActivity();
+        cartActivity.setMedicineChangeListener(MedicinesActivity.this);
 //        searchMedicineLayout.setLayoutParams(new ConstraintLayout.LayoutParams(width, hei));
         firebaseUtil = new FirebaseUtil(this);
         firebaseUtil.setFirebaseResponse(this);
@@ -166,7 +169,7 @@ public class MedicinesActivity extends BaseActivity implements SearchView.OnQuer
 
                 UserLocation userLocation = getLocation();
                 for (Pharmacist pharmacist : pharmacistArrayList) {
-                    if (distance(userLocation.latitude, userLocation.longitude, pharmacist.getLocation().latitude, pharmacist.getLocation().longitude) < radius) {
+                    if ((int) distance(userLocation.latitude, userLocation.longitude, pharmacist.getLocation().latitude, pharmacist.getLocation().longitude) <= radius) {
                         pharmacies.add(pharmacist);
                     }
                 }
@@ -208,5 +211,12 @@ public class MedicinesActivity extends BaseActivity implements SearchView.OnQuer
                 break;
             }
         }
+    }
+
+    @Override
+    public void onDataChanged() {
+        pharmacies.clear();
+        arraylist.clear();
+        firebaseUtil.getPharmacies();
     }
 }

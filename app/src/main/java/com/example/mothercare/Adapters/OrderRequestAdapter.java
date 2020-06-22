@@ -75,7 +75,7 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
         holder.orderedBy.setText(order.patient.username);
         for (Medicine medicine : order.medicine) {
             pharmacyName = medicine.pharmacyName + ", ";
-            medicines = medicine.medicineName + ", ";
+            medicines = medicine.medicineName + " (" + medicine.cartQuantity + "), ";
         }
         holder.medicines.setText(medicines);
         holder.orderPrice.setText(String.valueOf(order.orderPrice));

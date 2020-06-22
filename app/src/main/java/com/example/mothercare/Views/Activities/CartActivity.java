@@ -46,6 +46,7 @@ public class CartActivity extends BaseActivity implements CartAdapter.CartUpdate
     FirebaseUtil firebaseUtil;
     private static final int GET_FROM_GALLERY = 101;
     Bitmap bitmap = null;
+    UpdateMedicinesData updateMedicinesData;
     Patient patient = new Patient();
 
     @Override
@@ -82,6 +83,10 @@ public class CartActivity extends BaseActivity implements CartAdapter.CartUpdate
         });
     }
 
+    public void setMedicineChangeListener(UpdateMedicinesData updateMedicinesData) {
+        this.updateMedicinesData = updateMedicinesData;
+    }
+
     @Override
     protected int getLayoutResource() {
         return R.layout.activity_cart;
@@ -89,6 +94,7 @@ public class CartActivity extends BaseActivity implements CartAdapter.CartUpdate
 
     @Override
     public void cartUpdate(ArrayList<Medicine> cartArrayList) {
+        this.cartArrayList = new ArrayList<>();
         this.cartArrayList = cartArrayList;
         updatePrice();
     }
@@ -157,14 +163,16 @@ public class CartActivity extends BaseActivity implements CartAdapter.CartUpdate
         if (cartArrayList.size() == 0) {
             total.setText("0");
         } else {
+            price = 0;
             for (Medicine medicine : cartArrayList) {
-                price += medicine.price * medicine.cartQuantity;
+                price += medicine.price * medicine.getCount();
                 total.setText(String.valueOf(price));
             }
         }
     }
 
     private int getPrice() {
+        price = 0;
         for (Medicine medicine : cartArrayList) {
             price += medicine.price * medicine.cartQuantity;
         }
@@ -205,6 +213,8 @@ public class CartActivity extends BaseActivity implements CartAdapter.CartUpdate
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Order").child(orderID);
                     reference.setValue(medicineOrder);
                     showToast("Order Placed Successfully");
+                    firebaseUtil.updateMedicines(cartArrayList);
+                    updateMedicinesData.onDataChanged();
                     cartArrayList.clear();
                     showHideProgress(false, "");
                     finish();
@@ -214,5 +224,9 @@ public class CartActivity extends BaseActivity implements CartAdapter.CartUpdate
             case Error: {
             }
         }
+    }
+
+    public interface UpdateMedicinesData {
+        void onDataChanged();
     }
 }

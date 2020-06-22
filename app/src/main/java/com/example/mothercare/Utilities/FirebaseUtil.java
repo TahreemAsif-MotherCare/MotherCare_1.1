@@ -16,6 +16,7 @@ import com.example.mothercare.Models.Appointment;
 import com.example.mothercare.Models.AppointmentRequest;
 import com.example.mothercare.Models.Chat;
 import com.example.mothercare.Models.Doctor;
+import com.example.mothercare.Models.EmergencyContact;
 import com.example.mothercare.Models.Medicine;
 import com.example.mothercare.Models.MedicineOrder;
 import com.example.mothercare.Models.Notifications;
@@ -149,6 +150,32 @@ public class FirebaseUtil {
                 });
     }
 
+    public void signUpEmergencyContact(final EmergencyContact emergencyContact, final String password) {
+        mAuth.createUserWithEmailAndPassword(emergencyContact.email, password)
+                .addOnCompleteListener((Activity) context, new OnCompleteListener<AuthResult>() {
+                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            assert user != null;
+                            if (task.isSuccessful()) {
+                                createEmergencyProfile(emergencyContact);
+                            }
+                            user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Log.d(TAG, "onComplete: Email Sent");
+                                }
+                            });
+                        } else {
+                            ((SignupActivity) context).showHideProgress(false, "");
+                            ((SignupActivity) context).showAlertDialog("Error!", Objects.requireNonNull(task.getException()).toString());
+                        }
+                    }
+                });
+    }
+
     public void createDoctorProfile(Doctor doctor) {
         mDatabase = FirebaseDatabase.getInstance();
         try {
@@ -197,9 +224,25 @@ public class FirebaseUtil {
         }
     }
 
+    public void createEmergencyProfile(EmergencyContact emergencyContact) {
+        mDatabase = FirebaseDatabase.getInstance();
+        try {
+            DatabaseReference databaseReference = mDatabase.getReference().child("Emergency").child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid());
+            Bitmap bitmap = emergencyContact.profilePic;
+            emergencyContact.setProfilePic(null);
+            emergencyContact.setEmergencyID(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
+            databaseReference.setValue(emergencyContact);
+            uploadFile("Emergency", bitmap);
+        } catch (Exception e) {
+            Log.d(TAG, "createEmergencyProfile: " + e.getLocalizedMessage());
+            ((SignupActivity) context).showHideProgress(false, "");
+            ((SignupActivity) context).showAlertDialog("Error!", e.getLocalizedMessage());
+        }
+    }
+
     private void uploadFile(String user, Bitmap bitmap) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference mountainImagesRef = FirebaseStorage.getInstance().getReference().child(user).child(mAuth.getCurrentUser().getUid());
+        StorageReference mountainImagesRef = FirebaseStorage.getInstance().getReference().child(user).child(Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
         byte[] data = baos.toByteArray();
@@ -451,6 +494,21 @@ public class FirebaseUtil {
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             if (dataSnapshot.exists()) {
                                                 firebaseResponse.firebaseResponse(dataSnapshot, FirebaseResponses.isPharmacist);
+                                            }else {
+                                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Emergency").child(getCurrentUserID());
+                                                reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                        if (dataSnapshot.exists()) {
+                                                            firebaseResponse.firebaseResponse(dataSnapshot, FirebaseResponses.isPharmacist);
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                    }
+                                                });
                                             }
                                         }
 
@@ -1030,6 +1088,14 @@ public class FirebaseUtil {
             });
         } catch (Exception e) {
             Log.d("Reports: ", e.getMessage());
+        }
+    }
+
+    public void updateMedicines(ArrayList<Medicine> cartArrayList) {
+        for (Medicine medicine : cartArrayList) {
+            int remainingStock = medicine.stockQuantity - medicine.getCount();
+            FirebaseDatabase.getInstance().getReference("Medicines").child(medicine.pharmacyID).child(medicine.medicineID)
+                    .child("stockQuantity").setValue(remainingStock);
         }
     }
 

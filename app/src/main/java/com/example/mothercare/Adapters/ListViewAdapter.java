@@ -3,12 +3,14 @@ package com.example.mothercare.Adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,15 +88,22 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
-        holder.medicineName.setText(MedicineList.get(position).medicineName);
-        holder.medicinePower.setText("Dose: " + MedicineList.get(position).medicineDose);
-        if (MedicineList.get(position).stockQuantity != 0 || MedicineList.get(position).stockQuantity < 0) {
-            holder.medicineStockQuantity.setText("Available in stock ");
+        final int[] count = {MedicineList.get(position).getCount()};
+        final int stockAmount = MedicineList.get(position).stockQuantity;
+        final Medicine medicine = MedicineList.get(position);
+        holder.medicineName.setText(medicine.medicineName);
+        holder.medicinePower.setText("Dose: " + medicine.medicineDose);
+        if (medicine.stockQuantity != 0 || medicine.stockQuantity < 0) {
+            holder.medicineStockQuantity.setText(Integer.toString(medicine.stockQuantity) + " available.");
         } else {
             holder.medicineStockQuantity.setText("Out of stock ");
+            holder.addToCartIV.setVisibility(View.GONE);
+            holder.increase.setVisibility(View.GONE);
+            holder.decrease.setVisibility(View.GONE);
+            holder.quantityET.setVisibility(View.GONE);
         }
-        holder.medicinePrice.setText("Price: " + MedicineList.get(position).price + " Rs.");
-        holder.pharmacyName.setText(MedicineList.get(position).pharmacyName);
+        holder.medicinePrice.setText("Price: " + medicine.price + " Rs.");
+        holder.pharmacyName.setText(medicine.pharmacyName);
         if (currentFlow.equals("Patient")) {
             holder.addToCart.setVisibility(View.VISIBLE);
             holder.manageLayout.setVisibility(View.GONE);
@@ -103,7 +112,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.MyView
             holder.manageLayout.setVisibility(View.VISIBLE);
         }
 
-        StorageReference islandRef = FirebaseStorage.getInstance().getReference().child("Medicine").child(MedicineList.get(position).medicineID);
+        StorageReference islandRef = FirebaseStorage.getInstance().getReference().child("Medicine").child(medicine.medicineID);
         final long ONE_MEGABYTE = 1024 * 1024;
         islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
@@ -120,14 +129,20 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.MyView
         holder.addToCartIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!holder.itemQuantity.getSelectedItem().toString().equals("0")) {
-                    Medicine medicine = new Medicine(MedicineList.get(position).medicineID, MedicineList.get(position).medicineName, MedicineList.get(position).medicineDose,
-                            MedicineList.get(position).pharmacyName, MedicineList.get(position).price, MedicineList.get(position).stockQuantity,
-                            MedicineList.get(position).pharmacyID);
-                    medicine.setCartQuantity(Integer.parseInt(holder.itemQuantity.getSelectedItem().toString()));
-                    CartActivity.cartArrayList.add(medicine);
-                    holder.itemQuantity.setSelection(Integer.parseInt(mContext.getResources().getStringArray(R.array.stockQuantity)[0]));
-                    Toast.makeText(mContext, "Item Added to the cart", Toast.LENGTH_SHORT).show();
+                if (!holder.quantityET.getText().toString().equals("0")) {
+                    if (count[0] > medicine.stockQuantity) {
+                        Toast.makeText(mContext, "Your ordered amount is greater than the available stock", Toast.LENGTH_SHORT).show();
+                        holder.quantityET.setText("1");
+                    } else {
+                        Medicine medicineToUpload = new Medicine(MedicineList.get(position).medicineID, MedicineList.get(position).medicineName, MedicineList.get(position).medicineDose,
+                                MedicineList.get(position).pharmacyName, MedicineList.get(position).price, MedicineList.get(position).stockQuantity,
+                                MedicineList.get(position).pharmacyID);
+                        medicineToUpload.setCartQuantity(Integer.parseInt(holder.quantityET.getText().toString()));
+                        medicineToUpload.setCount(count[0]);
+                        CartActivity.cartArrayList.add(medicineToUpload);
+                        holder.quantityET.setText("1");
+                        Toast.makeText(mContext, "Item Added to the cart", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(mContext, "Please select medicine quantity!", Toast.LENGTH_SHORT).show();
                 }
@@ -143,13 +158,65 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.MyView
                 Toast.makeText(mContext, "Medicine Removed", Toast.LENGTH_SHORT).show();
             }
         });
+
+        holder.increase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (count[0] >= medicine.stockQuantity) {
+                    Toast.makeText(mContext, "Your ordered amount is greater than the available stock", Toast.LENGTH_SHORT).show();
+                } else {
+                    count[0]++;
+                    medicine.setCount(count[0]);
+                    holder.quantityET.setText(String.valueOf(count[0]));
+                }
+            }
+        });
+
+        holder.decrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                count[0]--;
+                if (count[0] != 0) {
+                    MedicineList.get(position).setCount(count[0]);
+                    holder.quantityET.setText(String.valueOf(count[0]));
+                } else count[0]++;
+            }
+        });
+
+        holder.quantityET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                /*if (!s.toString().equals("")) {
+                    try {
+                        if (Integer.parseInt(s.toString()) > stockAmount) {
+                            Toast.makeText(mContext, "Your ordered amount is greater than the available stock", Toast.LENGTH_SHORT).show();
+                        } else {
+                            MedicineList.get(position).setCount(Integer.parseInt(s.toString()));
+                            count[0] = MedicineList.get(position).getCount();
+                        }
+                    } catch (IndexOutOfBoundsException e) {
+                        Toast.makeText(mContext, "Your ordered amount is greater than the available stock", Toast.LENGTH_SHORT).show();
+                    }
+                }*/
+            }
+        });
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView medicineName, medicinePower, medicineStockQuantity, medicinePrice, pharmacyName;
         LinearLayout manageLayout, addToCart;
-        Spinner itemQuantity;
-        ImageView addToCartIV, medicinePicture;
+        ImageView addToCartIV, medicinePicture, decrease, increase;
+        EditText quantityET;
         ImageView deleteMedicine;
 
         public MyViewHolder(View view) {
@@ -164,7 +231,9 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.MyView
             addToCartIV = view.findViewById(R.id.addToCartButton);
             deleteMedicine = view.findViewById(R.id.deleteMedicine);
             medicinePicture = view.findViewById(R.id.medicinePicture);
-            itemQuantity = view.findViewById(R.id.quantity);
+            decrease = view.findViewById(R.id.decraseQuantityBtn);
+            increase = view.findViewById(R.id.increaseQuantityBtn);
+            quantityET = view.findViewById(R.id.et_quantity);
         }
     }
 }

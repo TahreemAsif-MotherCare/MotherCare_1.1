@@ -68,7 +68,8 @@ public class DashboardActivity extends BaseActivity implements FirebaseUtil.Fire
                     Intent intent = new Intent(DashboardActivity.this, MedicinesActivity.class);
                     startActivity(intent);
                 } else if (menuItem.getItemId() == R.id.menu) {
-//                    replaceFragment(R.id.dashboardFrameLayout, yourFragment);
+                    Intent intent = new Intent(DashboardActivity.this, EmergencyActivity.class);
+                    startActivity(intent);
                 }
                 return true;
             }
