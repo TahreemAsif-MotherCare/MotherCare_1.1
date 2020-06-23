@@ -258,6 +258,7 @@ public class FirebaseUtil {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 ((SignupActivity) context).showHideProgress(false, "");
                 ((SignupActivity) context).showToast("Registration Successful! A verification email is sent to your provided email address");
+                Objects.requireNonNull(FirebaseAuth.getInstance()).signOut();
                 Intent intent = new Intent(context, LoginActivity.class);
                 context.startActivity(intent);
                 ((SignupActivity) context).finish();
@@ -494,7 +495,7 @@ public class FirebaseUtil {
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             if (dataSnapshot.exists()) {
                                                 firebaseResponse.firebaseResponse(dataSnapshot, FirebaseResponses.isPharmacist);
-                                            }else {
+                                            } else {
                                                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Emergency").child(getCurrentUserID());
                                                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
                                                     @Override
@@ -768,6 +769,26 @@ public class FirebaseUtil {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 firebaseResponse.firebaseResponse(databaseError.getMessage(), FirebaseResponses.Error);
+            }
+        });
+    }
+
+    public void getAllEmergencyServices() {
+        final ArrayList<EmergencyContact> emergencyContacts = new ArrayList<>();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Emergency");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    EmergencyContact emergencyContact = snapshot.getValue(EmergencyContact.class);
+                    emergencyContacts.add(emergencyContact);
+                }
+                firebaseResponse.firebaseResponse(emergencyContacts, FirebaseResponses.getAllEmergencyContacts);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }

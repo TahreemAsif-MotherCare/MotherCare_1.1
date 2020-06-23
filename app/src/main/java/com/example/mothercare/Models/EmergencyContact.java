@@ -9,6 +9,11 @@ public class EmergencyContact {
     public EmergencyContact() {
     }
 
+    public EmergencyContact(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
     public EmergencyContact(String emergencyID, String name, String email, String contactNumber) {
         this.emergencyID = emergencyID;
         this.name = name;

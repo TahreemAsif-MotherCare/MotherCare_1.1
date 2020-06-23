@@ -585,9 +585,11 @@ public class SignupActivity extends BaseActivity {
             phoneNumber.requestFocus();
             return false;
         } else if (phoneNumber.getText().toString().length() < 11) {
-            phoneNumber.setError("Invalid Phone Number");
-            phoneNumber.requestFocus();
-            return false;
+            if (!userRole.getSelectedItem().equals("Emergency Service")) {
+                phoneNumber.setError("Invalid Phone Number");
+                phoneNumber.requestFocus();
+                return false;
+            }
         } else if (address.getText().toString().isEmpty()) {
             address.setError("Address cannot be empty");
             address.requestFocus();

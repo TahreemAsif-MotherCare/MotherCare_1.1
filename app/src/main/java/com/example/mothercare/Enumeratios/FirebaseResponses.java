@@ -16,6 +16,7 @@ public enum FirebaseResponses {
     AddedPatients,
     SpecificPatientReport,
     DiscussionMessages,
+    getAllEmergencyContacts,
     Doctors,
     MedicineReminders,
     PatientRequests,
