@@ -53,6 +53,7 @@ public class ViewAppointmentsActivity extends BaseActivity {
         requestAppointment = findViewById(R.id.requestAppointment);
         Intent intent = getIntent();
         user = intent.getStringExtra("appointmentUser");
+        getAddedDoctor();
         if (user.equalsIgnoreCase("Patient")) {
             getPatientAppointmentHistory();
         } else {
@@ -65,7 +66,7 @@ public class ViewAppointmentsActivity extends BaseActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         adapter = new ViewAppointmentsAdaptor(ViewAppointmentsActivity.this, appointmentList);
         recyclerView.setAdapter(adapter);
-        getAddedDoctor();
+
 
         requestAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,10 +155,10 @@ public class ViewAppointmentsActivity extends BaseActivity {
                             e.getLocalizedMessage();
                         }
                     }
-                    if (appointmentList.size() == 0) {
-                        recyclerView.setVisibility(View.GONE);
-                        noScheduledAppointments.setVisibility(View.VISIBLE);
-                    }
+                }
+                if (appointmentList.size() == 0) {
+                    recyclerView.setVisibility(View.GONE);
+                    noScheduledAppointments.setVisibility(View.VISIBLE);
                 }
                 showHideProgress(false, "");
                 adapter.setAppointmentList(appointmentList);

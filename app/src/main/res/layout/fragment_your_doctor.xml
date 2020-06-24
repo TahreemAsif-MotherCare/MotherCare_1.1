@@ -28,7 +28,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
-                android:id="@+id/medicinePicture"
+                android:id="@+id/doctorProfilePicture"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:contentDescription=""
@@ -44,7 +44,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/medicineName"
+                    android:id="@+id/doctorName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"

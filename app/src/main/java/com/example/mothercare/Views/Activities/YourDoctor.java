@@ -46,7 +46,7 @@ public class YourDoctor extends BaseActivity implements FirebaseUtil.FirebaseRes
     private TextView doctorName, specialization, qualification, education, worksat, contactNumber, email, address;
     private RatingBar ratingBar;
     private ImageView leaveDoctor;
-    private Doctor doctor;
+    private Doctor doctor = new Doctor();
     private Bitmap bitmap;
     private String doctorID;
 
@@ -61,7 +61,7 @@ public class YourDoctor extends BaseActivity implements FirebaseUtil.FirebaseRes
     private void init() {
         profilePic = findViewById(R.id.doctorProfilePicture);
         yourDoctorLayout = findViewById(R.id.yourDoctorLayout);
-        doctorName = findViewById(R.id.addedDoctorName);
+        doctorName = findViewById(R.id.doctorName);
         ratingBar = findViewById(R.id.ratingbar);
         specialization = findViewById(R.id.specializationDP);
         qualification = findViewById(R.id.qualificationDP);
@@ -157,7 +157,7 @@ public class YourDoctor extends BaseActivity implements FirebaseUtil.FirebaseRes
                     if (dataSnapshot.exists()) {
                         doctor = dataSnapshot.getValue(Doctor.class);
                         doctorName.setText(doctor.username);
-                        specialization.setText(doctor.experience);
+                        specialization.setText(String.valueOf(doctor.experience));
                         education.setText(doctor.institute);
                         qualification.setText(doctor.qualification);
                         worksat.setText(doctor.worksat);
