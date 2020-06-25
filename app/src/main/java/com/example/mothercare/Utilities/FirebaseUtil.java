@@ -658,7 +658,7 @@ public class FirebaseUtil {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     for (DataSnapshot postSnapShot : snapshot.getChildren()) {
                         Report report = postSnapShot.getValue(Report.class);
-                        if ((report.doctorID.equals(getCurrentUserID())) && (report.patientID.equals(patientID))) {
+                        if (report.patientID.equals(patientID)) {
                             reports.add(report);
                         }
                     }
