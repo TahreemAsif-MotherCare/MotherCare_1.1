@@ -7,4 +7,5 @@
     <color name="black">#000</color>
     <color name="doctor_gradient_light">#039BE5</color>
     <color name="pink">#FFEBEB</color>
+    <color name="gray">#d3d3d3</color>
 </resources>

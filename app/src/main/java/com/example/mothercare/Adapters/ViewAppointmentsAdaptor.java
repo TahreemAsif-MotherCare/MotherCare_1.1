@@ -1,12 +1,15 @@
 package com.example.mothercare.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -63,7 +66,7 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
                             } else if (appointment.getAppointmentType().equals("Call")) {
                                 holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
                             }
-                            holder.appointmentIcon.setColorFilter(ContextCompat.getColor(context, R.color.black), android.graphics.PorterDuff.Mode.MULTIPLY);
+                            holder.appointmentIcon.setColorFilter(ContextCompat.getColor(context, R.color.gray), android.graphics.PorterDuff.Mode.MULTIPLY);
                         } else {
                             if (holder.appointmentIcon.getVisibility() == View.GONE) {
                                 holder.appointmentIcon.setVisibility(View.VISIBLE);
@@ -84,7 +87,7 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
                         } else if (appointment.getAppointmentType().equals("Call")) {
                             holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
                         }
-                        holder.appointmentIcon.setColorFilter(ContextCompat.getColor(context, R.color.black), android.graphics.PorterDuff.Mode.MULTIPLY);
+                        holder.appointmentIcon.setColorFilter(ContextCompat.getColor(context, R.color.gray), android.graphics.PorterDuff.Mode.MULTIPLY);
                     }
                 } else {
                     if (appointment.getAppointmentType().equals("Video Call")) {
@@ -92,7 +95,7 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
                     } else if (appointment.getAppointmentType().equals("Call")) {
                         holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
                     }
-                    holder.appointmentIcon.setColorFilter(ContextCompat.getColor(context, R.color.black), android.graphics.PorterDuff.Mode.MULTIPLY);
+                    holder.appointmentIcon.setColorFilter(ContextCompat.getColor(context, R.color.gray), android.graphics.PorterDuff.Mode.MULTIPLY);
                 }
             } else {
                 holder.appointmentIcon.setVisibility(View.GONE);
@@ -109,10 +112,34 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
         holder.appointmentIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (()v) {
+                /*String contactNumber = "03125779969"; // to change with real value
+                Cursor cursor = context.getContentResolver()
+                        .query(
+                                ContactsContract.Data.CONTENT_URI,
+                                new String[]{ContactsContract.Data._ID},
+                                ContactsContract.RawContacts.ACCOUNT_TYPE + " = 'com.whatsapp' " +
+                                        "AND " + ContactsContract.Data.MIMETYPE + " = 'vnd.android.cursor.item/vnd.com.whatsapp.video.call' " +
+                                        "AND " + ContactsContract.CommonDataKinds.Phone.NUMBER + " LIKE '%" + contactNumber + "%'",
+                                null,
+                                ContactsContract.Contacts.DISPLAY_NAME
+                        );
+                if (cursor == null) {
+                    // throw an exception
+                }
+                long id = -1;
+                while (cursor.moveToNext()) {
+                    id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Data._ID));
+                }
+                if (!cursor.isClosed()) {
+                    cursor.close();
+                }
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
 
-                } else
-                    Toast.makeText(context, "Appointment Date has passed", Toast.LENGTH_SHORT).show();
+                intent.setDataAndType(Uri.parse("content://com.android.contacts/data/" + id), "vnd.android.cursor.item/vnd.com.whatsapp.voip.call");
+                intent.setPackage("com.whatsapp");
+
+                context.startActivity(intent);*/
             }
         });
     }
