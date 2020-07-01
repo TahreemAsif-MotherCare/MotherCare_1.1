@@ -14,6 +14,7 @@ import com.example.mothercare.Enumeratios.FirebaseResponses;
 import com.example.mothercare.Models.Dashboard;
 import com.example.mothercare.R;
 import com.example.mothercare.Utilities.FirebaseUtil;
+import com.example.mothercare.Views.Activities.AddReportsActivity;
 import com.example.mothercare.Views.Activities.AddedDoctorsActivity;
 import com.example.mothercare.Views.Activities.AddedPatientsActivity;
 import com.example.mothercare.Views.Activities.AppointmentActivity;
@@ -29,7 +30,6 @@ import com.example.mothercare.Views.Activities.RequestsActivity;
 import com.example.mothercare.Views.Activities.SymptomsActivity;
 import com.example.mothercare.Views.Activities.ViewAppointmentRequests;
 import com.example.mothercare.Views.Activities.ViewAppointmentsActivity;
-import com.example.mothercare.Views.Activities.ViewReportsForPatient;
 import com.example.mothercare.Views.Activities.YourDoctor;
 
 import java.util.List;
@@ -128,7 +128,7 @@ public class DashboardAdapter extends RecyclerView.Adapter<DashboardAdapter.MyVi
                     intent.putExtra("currentFlow", "AddReportActivity");
                     context.startActivity(intent);
                 } else if (holder.title.getText().toString().equalsIgnoreCase("View Reports")) {
-                    Intent intent = new Intent(context, ViewReportsForPatient.class);
+                    Intent intent = new Intent(context, AddReportsActivity.class);
                     context.startActivity(intent);
                 } else if (holder.title.getText().toString().equalsIgnoreCase("Analyze Symptoms")) {
                     Intent intent = new Intent(context, SymptomsActivity.class);

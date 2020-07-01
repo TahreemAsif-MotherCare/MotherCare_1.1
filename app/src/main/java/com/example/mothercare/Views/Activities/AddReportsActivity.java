@@ -40,7 +40,7 @@ public class AddReportsActivity extends BaseActivity implements FirebaseUtil.Fir
     private Uri selectedImage;
     private Bitmap bitmap;
     private FirebaseUtil firebaseUtil;
-    private String patientID;
+    private String patientID, doctorID;
     private ViewReportsAdapter adapter;
 
 
@@ -51,9 +51,19 @@ public class AddReportsActivity extends BaseActivity implements FirebaseUtil.Fir
         noSharedReportsTextView = findViewById(R.id.noReportsShared);
         uploadReports = findViewById(R.id.newReport);
         firebaseUtil = new FirebaseUtil(this);
-        Intent intent = getIntent();
-        patientID = intent.getStringExtra("patientID");
         firebaseUtil.setFirebaseResponse(this);
+        Intent intent = getIntent();
+        try {
+            patientID = intent.getStringExtra("patientID");
+            if (patientID == null) {
+                patientID = firebaseUtil.getCurrentUserID();
+                firebaseUtil.getAddedDoctor();
+            } else {
+                doctorID = firebaseUtil.getCurrentUserID();
+            }
+        } catch (Exception e) {
+            patientID = firebaseUtil.getCurrentUserID();
+        }
         showHideProgress(true, "Please Wait");
         firebaseUtil.getSpecificPatientReport(patientID);
 
@@ -98,10 +108,11 @@ public class AddReportsActivity extends BaseActivity implements FirebaseUtil.Fir
         uploadReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Report report = new Report(generateReportID(), firebaseUtil.getCurrentUserID(), patientID, reportDescription.getText().toString());
+                Report report = new Report(generateReportID(), doctorID, patientID, reportDescription.getText().toString());
                 report.setReportPicture(bitmap);
                 firebaseUtil.uploadReport(patientID, report);
                 dialog.dismiss();
+                adapter.notifyDataSetChanged();
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +143,10 @@ public class AddReportsActivity extends BaseActivity implements FirebaseUtil.Fir
     public void firebaseResponse(Object o, FirebaseResponses firebaseResponses) {
         showHideProgress(false, "");
         switch (firebaseResponses) {
+            case PatientsAddedDoctor: {
+                doctorID = o.toString();
+                break;
+            }
             case SpecificPatientReport: {
                 ArrayList<Report> reports = (ArrayList<Report>) o;
                 if (!reports.isEmpty()) {

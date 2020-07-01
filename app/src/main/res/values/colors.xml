@@ -8,4 +8,5 @@
     <color name="doctor_gradient_light">#039BE5</color>
     <color name="pink">#FFEBEB</color>
     <color name="gray">#d3d3d3</color>
+    <color name="gray_light">#f9f7f7</color>
 </resources>

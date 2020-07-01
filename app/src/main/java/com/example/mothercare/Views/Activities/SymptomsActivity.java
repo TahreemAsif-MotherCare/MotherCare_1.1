@@ -1,7 +1,9 @@
 package com.example.mothercare.Views.Activities;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -196,7 +198,6 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
 
                     //showAlertDialog("Request", jsonObject.toString());
                     ////////////////////////////////////////////////////////////////////////////////
-
                     RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
                     String url = "http://192.168.10.2:5002/predict";
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
@@ -204,6 +205,7 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
                                 @Override
                                 public void onResponse(JSONObject response) {
                                     try {
+                                        showHideProgress(false, "");
                                         showAlertDialog("Symptom Analyzer Result", "Symptom analyzer has analyzed that: " + response.getString("msg"));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -729,6 +731,14 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
         viewPager.setPadding(60, 20, 60, 20);
         viewPager.setVisibility(View.VISIBLE);
 
+        viewPager.setOnTouchListener(new View.OnTouchListener() {
+            @SuppressLint("ClickableViewAccessibility")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
+
         showHideProgress(false, "");
     }
 
@@ -954,5 +964,6 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
     @Override
     public void symptomResponse(int position, String response) {
         questions.get(position).questionStatus = response;
+        viewPager.setCurrentItem(position + 1);
     }
 }

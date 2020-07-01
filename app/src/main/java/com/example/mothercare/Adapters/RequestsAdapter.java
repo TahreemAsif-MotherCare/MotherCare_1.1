@@ -1,6 +1,7 @@
 package com.example.mothercare.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mothercare.Models.Patient;
 import com.example.mothercare.R;
 import com.example.mothercare.Utilities.FirebaseUtil;
-import com.example.mothercare.Views.Activities.RequestsActivity;
+import com.example.mothercare.Views.Activities.PatientProfileActivity;
 
 import java.util.ArrayList;
 
@@ -61,6 +62,14 @@ public class RequestsAdapter extends RecyclerView.Adapter<RequestsAdapter.MyView
                 firebaseUtil.addFriend(context, request.patientID);
                 requestArrayList.remove(position);
 
+            }
+        });
+        holder.patientName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, PatientProfileActivity.class);
+                intent.putExtra("ID", request.patientID);
+                context.startActivity(intent);
             }
         });
     }

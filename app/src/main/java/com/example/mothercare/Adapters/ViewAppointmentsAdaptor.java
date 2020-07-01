@@ -1,15 +1,12 @@
 package com.example.mothercare.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -64,7 +61,7 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
                             if (appointment.getAppointmentType().equals("Video Call")) {
                                 holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
                             } else if (appointment.getAppointmentType().equals("Call")) {
-                                holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
+                                holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_call));
                             }
                             holder.appointmentIcon.setColorFilter(ContextCompat.getColor(context, R.color.gray), android.graphics.PorterDuff.Mode.MULTIPLY);
                         } else {
@@ -74,7 +71,7 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
                             if (appointment.getAppointmentType().equals("Video Call")) {
                                 holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
                             } else if (appointment.getAppointmentType().equals("Call")) {
-                                holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
+                                holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_call));
                             }
                             holder.appointmentIcon.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimaryDark), android.graphics.PorterDuff.Mode.MULTIPLY);
                         }
@@ -85,7 +82,7 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
                         if (appointment.getAppointmentType().equals("Video Call")) {
                             holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
                         } else if (appointment.getAppointmentType().equals("Call")) {
-                            holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
+                            holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_call));
                         }
                         holder.appointmentIcon.setColorFilter(ContextCompat.getColor(context, R.color.gray), android.graphics.PorterDuff.Mode.MULTIPLY);
                     }
@@ -93,7 +90,7 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
                     if (appointment.getAppointmentType().equals("Video Call")) {
                         holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
                     } else if (appointment.getAppointmentType().equals("Call")) {
-                        holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
+                        holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_call));
                     }
                     holder.appointmentIcon.setColorFilter(ContextCompat.getColor(context, R.color.gray), android.graphics.PorterDuff.Mode.MULTIPLY);
                 }
@@ -112,6 +109,11 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
         holder.appointmentIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (holder.appointmentIcon.getDrawable() == context.getResources().getDrawable(R.drawable.ic_video_call)) {
+                    Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
+                } else if (holder.appointmentIcon.getDrawable() == context.getResources().getDrawable(R.drawable.ic_call)) {
+
+                }
                 /*String contactNumber = "03125779969"; // to change with real value
                 Cursor cursor = context.getContentResolver()
                         .query(
