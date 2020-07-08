@@ -97,4 +97,9 @@
         <item>Layari</item>
 
     </string-array>
+
+
+    <string name="jsonArray">
+
+    </string>
 </resources>

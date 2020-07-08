@@ -22,6 +22,7 @@ import com.example.mothercare.BaseActivity;
 import com.example.mothercare.Models.Symptoms;
 import com.example.mothercare.Models.SymptomsQuestions;
 import com.example.mothercare.R;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.skyhope.materialtagview.TagView;
 import com.skyhope.materialtagview.model.TagModel;
 
@@ -30,17 +31,22 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.SymtomsResponse {
     TagView tagView;
@@ -51,6 +57,15 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
     ArrayList<SymptomsQuestions> questions = new ArrayList<>();
     ViewPager viewPager;
     ViewPagerAdapter adapter;
+    HashMap<String, Boolean> symptomsHash = new HashMap<>();
+    String json = "{\n" +
+            "            \"output\": \"ITS LABOR SYMPTOMS AND YOU NEED TO TELL YOUR DOCTOR IF YOU ARE OBSERVING THESE .\",\n" +
+            "            \"Bleading (light /heavy)\": \"0\",\n" +
+            "            \"svere cramps\": \"0\",\n" +
+            "            \"Weakness\": \"0\",\n" +
+            "            \"abdominal pain\": \"0\",\n" +
+            "            \"svere back pain\": \"1\",\n" +
+            "            \"fever\": \"0\",}";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +85,78 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
         proceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
+                /*try {
                     showHideProgress(true, "Please Wait");
                     readExcelFile();
                 } catch (IOException | InvalidFormatException e) {
+                    e.printStackTrace();
+                }*/
+                ObjectMapper mapper = new ObjectMapper();
+                String json = getTermsString();
+                try {
+                    JSONArray array = new JSONArray(json);
+                    List<HashMap<String, Boolean>> symptomsList = new ArrayList<>();
+                    for (int i = 0; i < array.length(); i++) {
+                        new JSONObject();
+                        JSONObject jsonObject;
+                        jsonObject = array.getJSONObject(i);
+
+                        HashMap<String, Boolean> map = new HashMap<>();
+                        map.put("Bleading", jsonObject.get("Bleading").equals("1"));
+                        map.put("Severe Cramps", jsonObject.get("sverecramps").equals("1"));
+                        map.put("Weakness", jsonObject.get("Weakness").equals("1"));
+                        map.put("Abdominal Pain", jsonObject.get("abdominalpain").equals("1"));
+                        map.put("Severe Back Pain", jsonObject.get("sverebackpain").equals("1"));
+                        map.put("Fever", jsonObject.get("fever").equals("1"));
+                        map.put("Pregnancy Less than 20 Days", jsonObject.get("pregnancy20days").equals("1"));
+                        map.put("Previous History of Miscarriage", jsonObject.get("previoushistoryofmiscarriage").equals("1"));
+                        map.put("Age less than 35", jsonObject.get("age35").equals("1"));
+                        map.put("Pregnant for more than 41 weeks", jsonObject.get("morethan41weekspregnant").equals("1"));
+                        map.put("Placenta Order", jsonObject.get("placentadisorder").equals("1"));
+                        map.put("Diabetes", jsonObject.get("diabtities").equals("1"));
+                        map.put("Kidney Problem", jsonObject.get("kidneyproblem").equals("1"));
+                        map.put("High-Blood Pressure", jsonObject.get("highbloodpressure").equals("1"));
+                        map.put("Fewer Movements of Baby", jsonObject.get("fewermovementsofbaby").equals("1"));
+                        map.put("Water has Broken", jsonObject.get("waterhasbroken").equals("1"));
+                        map.put("Contraction not started yet", jsonObject.get("contractionnotstartedyet").equals("1"));
+                        map.put("You may have twins", jsonObject.get("youmayhavetwins").equals("1"));
+                        map.put("Vomiting", jsonObject.get("Vomiting").equals("1"));
+                        map.put("Sharp Abdominal Cramps", jsonObject.get("sharpabdominalcramps").equals("1"));
+                        map.put("Pain on one side", jsonObject.get("PAINononeside").equals("1"));
+                        map.put("Dizziness", jsonObject.get("Dizziness").equals("1"));
+                        map.put("Pain in shoulder", jsonObject.get("Paininsholder").equals("1"));
+                        map.put("Difficulty in bowl movement", jsonObject.get("difficultyinbowlmovement").equals("1"));
+                        map.put("Light Headed", jsonObject.get("lightheaded").equals("1"));
+                        map.put("Feeling Sick", jsonObject.get("feelingsick").equals("1"));
+                        map.put("Can't keep food down", jsonObject.get("cantkeepfooddown").equals("1"));
+                        map.put("Weight Loss", jsonObject.get("weightloss").equals("1"));
+                        map.put("Low Blood Pressure", jsonObject.get("lowbloodpressure").equals("1"));
+                        map.put("Confusion", jsonObject.get("confusion").equals("1"));
+                        map.put("Jaundice", jsonObject.get("jaundice").equals("1"));
+                        map.put("Headache", jsonObject.get("headache").equals("1"));
+                        map.put("History of premature birth", jsonObject.get("historyofprematurebirth").equals("1"));
+                        map.put("Vaginal Bleeding", jsonObject.get("vaginalbleeding").equals("1"));
+                        map.put("Harmonal Changes", jsonObject.get("harmonalchanges").equals("1"));
+                        map.put("Uterus Stretching", jsonObject.get("uterusstreching").equals("1"));
+                        map.put("Plug of mucus in your cervix", jsonObject.get("plugofmucusinyourcervix").equals("1"));
+                        map.put("Last Month", jsonObject.get("lastmonth").equals("1"));
+                        map.put("Cervix Dilates", jsonObject.get("cervixdilates").equals("1"));
+                        map.put("Loose Feeling Joints", jsonObject.get("Loosefeelingjoints").equals("1"));
+                        map.put("Weight gain stops", jsonObject.get("Weightgainstops").equals("1"));
+                        map.put("Fatigue", jsonObject.get("Fatigue").equals("1"));
+                        map.put("Vaginal Discharge", jsonObject.get("Vaginaldischargechangescolorandconsistency").equals("1"));
+                        map.put("Frequent Contractions", jsonObject.get("frequentcontractions").equals("1"));
+                        map.put("Stomach pain till 3 months", jsonObject.get("stomachpaintill3months").equals("1"));
+                        map.put("Less than 37 weeks", jsonObject.get("37week").equals("1"));
+                        map.put("Blackout", jsonObject.get("blackout").equals("1"));
+                        map.put("Loss of consiousness", jsonObject.get("lossofconsiousness").equals("1"));
+                        map.put("Breath in difficulty", jsonObject.get("breathinddifficulty").equals("1"));
+                        map.put("Chest pain", jsonObject.get("CHESTPain").equals("1"));
+                        map.put("Paint While Urinating", jsonObject.get("PAINWHILEUURINATING").equals("1"));
+
+                        symptomsList.add(map);
+                    }
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
@@ -208,12 +291,14 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
                                         showHideProgress(false, "");
                                         showAlertDialog("Symptom Analyzer Result", "Symptom analyzer has analyzed that: " + response.getString("msg"));
                                     } catch (JSONException e) {
+                                        showHideProgress(false, "Please Wait");
                                         e.printStackTrace();
                                     }
                                 }
                             }, new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            showHideProgress(false, "Please Wait");
                             showAlertDialog("Response", "String Response : " + error.toString());
                         }
                     });
@@ -227,6 +312,26 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
                 //Log. d("JSON", "Error!");
             }
         });
+    }
+
+    private String getTermsString() {
+        StringBuilder termsString = new StringBuilder();
+        BufferedReader reader;
+        try {
+            reader = new BufferedReader(
+                    new InputStreamReader(getAssets().open("JsonString.txt")));
+
+            String str;
+            while ((str = reader.readLine()) != null) {
+                termsString.append(str);
+            }
+
+            reader.close();
+            return termsString.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -246,6 +351,7 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
         for (int i = 1; i <= mySheet.getPhysicalNumberOfRows() - 2; i++) {
             mySheet.getRow(i).getPhysicalNumberOfCells();
             Symptoms symptoms = new Symptoms();
+            symptomsHash.put(mySheet.getRow(0).getCell(1).toString(), mySheet.getRow(i).getCell(1).toString().equals("1.0"));
             symptoms.setBleeding(mySheet.getRow(i).getCell(1).toString().equals("1.0"));
             symptoms.setSevereCramps(mySheet.getRow(i).getCell(2).toString().equals("1.0"));
             symptoms.setWeakness(mySheet.getRow(i).getCell(3).toString().equals("1.0"));
@@ -335,6 +441,7 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
 
         for (int i = 0; i < symptomsArayList.size(); i++) {
             Symptoms symptoms = symptomsArayList.get(i);
+            boolean allTrue = false;
             if (selectedTags.isEmpty()) {
                 if ((!symptoms.isBleeding()) && (!symptoms.isFever()) && (!symptoms.isSevereBackPain()) && (!symptoms.isSevereCramps()) && (!symptoms.isWeakness()) &&
                         (!symptoms.isAbdominalPain())) {
