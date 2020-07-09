@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -22,7 +25,6 @@ import com.example.mothercare.BaseActivity;
 import com.example.mothercare.Models.Symptoms;
 import com.example.mothercare.Models.SymptomsQuestions;
 import com.example.mothercare.R;
-import com.skyhope.materialtagview.TagView;
 import com.skyhope.materialtagview.model.TagModel;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -43,7 +45,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.SymtomsResponse {
-    TagView tagView;
+    //    TagView tagView;
     private Button analyzeSymptoms;
     TextView proceed, answerMoreQuestions;
     ArrayList<Symptoms> symptomsArayList;
@@ -51,6 +53,7 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
     ArrayList<SymptomsQuestions> questions = new ArrayList<>();
     ViewPager viewPager;
     ViewPagerAdapter adapter;
+    RecyclerView tagsRV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +62,18 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
         answerMoreQuestions = findViewById(R.id.answerMoreQuestions);
         proceed = findViewById(R.id.proceed);
         analyzeSymptoms = findViewById(R.id.identifySymptoms);
-
-        tagView = findViewById(R.id.tag_view_test);
+        tagsRV = findViewById(R.id.tagsRV);
+        // set a StaggeredGridLayoutManager with 3 number of columns and horizontal orientation
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, LinearLayoutManager.HORIZONTAL);
+        tagsRV.setLayoutManager(staggeredGridLayoutManager); // set LayoutManager to RecyclerView
+//        tagView = findViewById(R.id.tag_view_test);
+/*
         tagView.setHint("Add your skill");
         tagView.setHint("Add additional symptoms if you have any.");
         tagView.addTagLimit(6);
         String[] tagList = new String[]{"Fever", "Bleeding", "Cramps", "Weakness", "Back Pain", "Stomach Pain"};
         tagView.setTagList(tagList);
+*/
 
         proceed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -301,7 +309,7 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
             symptoms.setPainWhileUrinating(mySheet.getRow(i).getCell(54).toString().equals("1.0"));
             symptomsArayList.add(symptoms);
         }
-        prepareQuestions();
+//        prepareQuestions();
     }
 
     public File getFile(InputStream inputStream) throws IOException {
@@ -328,239 +336,239 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
         return file;
     }
 
-    private void prepareQuestions() {
-        selectedTags = (ArrayList) tagView.getSelectedTags();
-        ArrayList<Symptoms> selectedTagsSymptomsArrayList = new ArrayList<>();
-
-
-        for (int i = 0; i < symptomsArayList.size(); i++) {
-            Symptoms symptoms = symptomsArayList.get(i);
-            if (selectedTags.isEmpty()) {
-                if ((!symptoms.isBleeding()) && (!symptoms.isFever()) && (!symptoms.isSevereBackPain()) && (!symptoms.isSevereCramps()) && (!symptoms.isWeakness()) &&
-                        (!symptoms.isAbdominalPain())) {
-                    selectedTagsSymptomsArrayList.add(symptoms);
-                }
-            } else {
-                for (TagModel tagModel : selectedTags) {
-                    if (tagModel.getTagText().equalsIgnoreCase("Fever")) {
-                        if (symptoms.isFever()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().equalsIgnoreCase("Bleeding")) {
-                        if (symptoms.isBleeding()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().equalsIgnoreCase("Cramps")) {
-                        if (symptoms.isSevereCramps()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().equalsIgnoreCase("Weakness")) {
-                        if (symptoms.isWeakness()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().equalsIgnoreCase("Back Pain")) {
-                        if (symptoms.isSevereBackPain()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().equalsIgnoreCase("Stomach Pain")) {
-                        if (symptoms.isAbdominalPain()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("20 days")) {
-                        if (symptoms.isPregnancyLessThan20Days()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("miscarriage")) {
-                        if (symptoms.isPreviousHistoryOfMiscarriage()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("35")) {
-                        if (symptoms.isAgeLessThan35()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("41 weeks")) {
-                        if (symptoms.isPregnancyWeeksMoreThan41()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("placenta disorder")) {
-                        if (symptoms.isPlacentaDisorder()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("diabities")) {
-                        if (symptoms.isDiabities()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("kidney")) {
-                        if (symptoms.isKidneyProblem()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("high blood pressure")) {
-                        if (symptoms.isHighBloodPressure()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("fewer movements")) {
-                        if (symptoms.isFewerMovementsOfBaby()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("water")) {
-                        if (symptoms.isWaterBroken()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("contractions not started")) {
-                        if (symptoms.isContractionStarted()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("twins")) {
-                        if (symptoms.isMayHaveTwins()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("nausea")) {
-                        if (symptoms.isNausea()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("vomitting")) {
-                        if (symptoms.isVomiting()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("abdominal cramps")) {
-                        if (symptoms.isSharpAbdominalCramps()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("pain on one side")) {
-                        if (symptoms.isPainOnOneSide()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("dizziness")) {
-                        if (symptoms.isDizziness()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("pain in shoulder")) {
-                        if (symptoms.isPaintInShoulder()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("bowl movement")) {
-                        if (symptoms.isDifficultyInBowlMovement()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("lighheaded")) {
-                        if (symptoms.isLightHeaded()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("sick")) {
-                        if (symptoms.isFeelingSick()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("food down")) {
-                        if (symptoms.isCantKeepFoodDown()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("weightloss")) {
-                        if (symptoms.isWeightLoss()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("low blood pressure")) {
-                        if (symptoms.isLowBloodPressure()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("confusion")) {
-                        if (symptoms.isConfusion()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("jaundice")) {
-                        if (symptoms.isJaundice()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("headache")) {
-                        if (symptoms.isHeadache()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("premature")) {
-                        if (symptoms.isHistoryOfPrematureBirth()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("vaginal bleeding")) {
-                        if (symptoms.isVaginalBleeding()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("harmonal changes")) {
-                        if (symptoms.isHarmonalChanges()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("uterus")) {
-                        if (symptoms.isUterusStrectching()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("plug of mucus")) {
-                        if (symptoms.isPlugOfMucusInCervix()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("last month")) {
-                        if (symptoms.isLastMonth()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("aby")) {
-                        if (symptoms.isAbyDrops()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("cervix dilates")) {
-                        if (symptoms.isCervixDilates()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("loose-feeling")) {
-                        if (symptoms.isLooseFeelingJoints()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("weight gain")) {
-                        if (symptoms.isWeightGainStops()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("fatigue")) {
-                        if (symptoms.isFatigue()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("vaginal discharge")) {
-                        if (symptoms.isVaginalDischargeChanges()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("frequent contractions")) {
-                        if (symptoms.isFrequestContractions()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("3 months")) {
-                        if (symptoms.isStomachPainTill3Months()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("37 weeks")) {
-                        if (symptoms.isLessThan37Weeks()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("blackout")) {
-                        if (symptoms.isBlackOut()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("loss of consiousness")) {
-                        if (symptoms.isLossOfConsiousness()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("breathing")) {
-                        if (symptoms.isBreathingDifficulty()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("chest pain")) {
-                        if (symptoms.isChestPain()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    } else if (tagModel.getTagText().toLowerCase().contains("pain while urinating")) {
-                        if (symptoms.isPainWhileUrinating()) {
-                            selectedTagsSymptomsArrayList.add(symptoms);
-                        }
-                    }
-                }
-            }
-        }
-        createSymptomsObject(selectedTagsSymptomsArrayList);
-
-    }
+//    private void prepareQuestions() {
+//        selectedTags = (ArrayList) tagView.getSelectedTags();
+//        ArrayList<Symptoms> selectedTagsSymptomsArrayList = new ArrayList<>();
+//
+//
+//        for (int i = 0; i < symptomsArayList.size(); i++) {
+//            Symptoms symptoms = symptomsArayList.get(i);
+//            if (selectedTags.isEmpty()) {
+//                if ((!symptoms.isBleeding()) && (!symptoms.isFever()) && (!symptoms.isSevereBackPain()) && (!symptoms.isSevereCramps()) && (!symptoms.isWeakness()) &&
+//                        (!symptoms.isAbdominalPain())) {
+//                    selectedTagsSymptomsArrayList.add(symptoms);
+//                }
+//            } else {
+//                for (TagModel tagModel : selectedTags) {
+//                    if (tagModel.getTagText().equalsIgnoreCase("Fever")) {
+//                        if (symptoms.isFever()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().equalsIgnoreCase("Bleeding")) {
+//                        if (symptoms.isBleeding()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().equalsIgnoreCase("Cramps")) {
+//                        if (symptoms.isSevereCramps()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().equalsIgnoreCase("Weakness")) {
+//                        if (symptoms.isWeakness()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().equalsIgnoreCase("Back Pain")) {
+//                        if (symptoms.isSevereBackPain()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().equalsIgnoreCase("Stomach Pain")) {
+//                        if (symptoms.isAbdominalPain()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("20 days")) {
+//                        if (symptoms.isPregnancyLessThan20Days()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("miscarriage")) {
+//                        if (symptoms.isPreviousHistoryOfMiscarriage()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("35")) {
+//                        if (symptoms.isAgeLessThan35()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("41 weeks")) {
+//                        if (symptoms.isPregnancyWeeksMoreThan41()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("placenta disorder")) {
+//                        if (symptoms.isPlacentaDisorder()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("diabities")) {
+//                        if (symptoms.isDiabities()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("kidney")) {
+//                        if (symptoms.isKidneyProblem()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("high blood pressure")) {
+//                        if (symptoms.isHighBloodPressure()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("fewer movements")) {
+//                        if (symptoms.isFewerMovementsOfBaby()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("water")) {
+//                        if (symptoms.isWaterBroken()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("contractions not started")) {
+//                        if (symptoms.isContractionStarted()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("twins")) {
+//                        if (symptoms.isMayHaveTwins()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("nausea")) {
+//                        if (symptoms.isNausea()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("vomitting")) {
+//                        if (symptoms.isVomiting()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("abdominal cramps")) {
+//                        if (symptoms.isSharpAbdominalCramps()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("pain on one side")) {
+//                        if (symptoms.isPainOnOneSide()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("dizziness")) {
+//                        if (symptoms.isDizziness()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("pain in shoulder")) {
+//                        if (symptoms.isPaintInShoulder()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("bowl movement")) {
+//                        if (symptoms.isDifficultyInBowlMovement()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("lighheaded")) {
+//                        if (symptoms.isLightHeaded()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("sick")) {
+//                        if (symptoms.isFeelingSick()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("food down")) {
+//                        if (symptoms.isCantKeepFoodDown()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("weightloss")) {
+//                        if (symptoms.isWeightLoss()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("low blood pressure")) {
+//                        if (symptoms.isLowBloodPressure()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("confusion")) {
+//                        if (symptoms.isConfusion()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("jaundice")) {
+//                        if (symptoms.isJaundice()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("headache")) {
+//                        if (symptoms.isHeadache()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("premature")) {
+//                        if (symptoms.isHistoryOfPrematureBirth()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("vaginal bleeding")) {
+//                        if (symptoms.isVaginalBleeding()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("harmonal changes")) {
+//                        if (symptoms.isHarmonalChanges()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("uterus")) {
+//                        if (symptoms.isUterusStrectching()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("plug of mucus")) {
+//                        if (symptoms.isPlugOfMucusInCervix()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("last month")) {
+//                        if (symptoms.isLastMonth()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("aby")) {
+//                        if (symptoms.isAbyDrops()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("cervix dilates")) {
+//                        if (symptoms.isCervixDilates()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("loose-feeling")) {
+//                        if (symptoms.isLooseFeelingJoints()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("weight gain")) {
+//                        if (symptoms.isWeightGainStops()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("fatigue")) {
+//                        if (symptoms.isFatigue()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("vaginal discharge")) {
+//                        if (symptoms.isVaginalDischargeChanges()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("frequent contractions")) {
+//                        if (symptoms.isFrequestContractions()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("3 months")) {
+//                        if (symptoms.isStomachPainTill3Months()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("37 weeks")) {
+//                        if (symptoms.isLessThan37Weeks()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("blackout")) {
+//                        if (symptoms.isBlackOut()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("loss of consiousness")) {
+//                        if (symptoms.isLossOfConsiousness()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("breathing")) {
+//                        if (symptoms.isBreathingDifficulty()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("chest pain")) {
+//                        if (symptoms.isChestPain()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    } else if (tagModel.getTagText().toLowerCase().contains("pain while urinating")) {
+//                        if (symptoms.isPainWhileUrinating()) {
+//                            selectedTagsSymptomsArrayList.add(symptoms);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        createSymptomsObject(selectedTagsSymptomsArrayList);
+//
+//    }
 
     private void showQuestions(Symptoms symptoms) {
 //        answerMoreQuestions.setVisibility(View.VISIBLE);

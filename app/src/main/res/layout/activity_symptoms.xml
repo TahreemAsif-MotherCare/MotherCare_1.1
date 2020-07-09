@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.skyhope.materialtagview.TagView
+    <!--<com.skyhope.materialtagview.TagView
         android:id="@+id/tag_view_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +30,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tite"
-        app:tag_separator="HASH_SEPARATOR" />
+        app:tag_separator="HASH_SEPARATOR" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tagsRV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tite" />
 
     <TextView
         android:id="@+id/proceed"
@@ -49,7 +57,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/tv"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tag_view_test" />
+        app:layout_constraintTop_toBottomOf="@id/tagsRV" />
 
     <TextView
         android:id="@+id/tv"
