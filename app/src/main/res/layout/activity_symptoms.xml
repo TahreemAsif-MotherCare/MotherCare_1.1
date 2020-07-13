@@ -32,13 +32,31 @@
         app:layout_constraintTop_toBottomOf="@id/tite"
         app:tag_separator="HASH_SEPARATOR" />-->
 
+    <SearchView
+        android:id="@+id/searchTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/edittext_shape"
+        android:inputType="text"
+        android:queryHint="Search Medicine"
+        android:singleLine="true"
+        android:textSize="@dimen/input_font_size"
+        app:layout_constraintBottom_toTopOf="@id/tagsRV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tite"
+        tools:ignore="Autofill" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tagsRV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tite" />
+        app:layout_constraintTop_toBottomOf="@id/searchTag" />
 
     <TextView
         android:id="@+id/proceed"

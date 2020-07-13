@@ -26,7 +26,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.mothercare.Models.UserLocation;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
+import java.util.TimeZone;
 
 import dmax.dialog.SpotsDialog;
 
@@ -178,7 +181,13 @@ public abstract class BaseActivity extends AppCompatActivity {
             sendBroadcast(poke);
         }
     }
-
+    public String getCurrentDate() {
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormat = new SimpleDateFormat("h:mm a dd MMMM yyyy");
+        dateFormat.setTimeZone(TimeZone
+                .getTimeZone("GMT+05:00"));
+        Date today = java.util.Calendar.getInstance().getTime();
+        return dateFormat.format(today);
+    }
     protected int generateNotificationID() {
         Random r = new Random();
         int low = 10;

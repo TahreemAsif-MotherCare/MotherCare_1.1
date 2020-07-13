@@ -43,6 +43,12 @@ public class ViewReportsAdapter extends RecyclerView.Adapter<ViewReportsAdapter.
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         final Report report = reportArrayList.get(position);
         holder.descrpiton.setText(report.description);
+        if (report.date == null || report.date.isEmpty()) {
+            holder.reportHeading.setText("Could not get date!");
+        } else {
+            holder.reportHeading.setText(report.date);
+        }
+
 
         StorageReference islandRef = FirebaseStorage.getInstance().getReference().child("Reports").child(report.reportID);
         final long ONE_MEGABYTE = 1024 * 1024;
@@ -64,13 +70,24 @@ public class ViewReportsAdapter extends RecyclerView.Adapter<ViewReportsAdapter.
         return reportArrayList.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    public void resetArray() {
+        this.reportArrayList = new ArrayList<>();
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
+        public TextView reportHeading;
         public TextView descrpiton;
         public ImageView reportPic;
 
         public MyViewHolder(View view) {
             super(view);
             reportPic = view.findViewById(R.id.reportPicture);
+            reportHeading = view.findViewById(R.id.reportHeading);
             descrpiton = view.findViewById(R.id.reportDescriptionTextView);
         }
     }

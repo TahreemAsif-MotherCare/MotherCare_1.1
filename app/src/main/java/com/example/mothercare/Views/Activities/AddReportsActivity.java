@@ -108,10 +108,14 @@ public class AddReportsActivity extends BaseActivity implements FirebaseUtil.Fir
         uploadReport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Report report = new Report(generateReportID(), doctorID, patientID, reportDescription.getText().toString());
+                Report report = new Report(generateReportID(), doctorID, patientID, reportDescription.getText().toString(),
+                        getCurrentDate());
                 report.setReportPicture(bitmap);
                 firebaseUtil.uploadReport(patientID, report);
                 dialog.dismiss();
+                adapter.resetArray();
+                adapter = new ViewReportsAdapter(reports, AddReportsActivity.this);
+                recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
         });

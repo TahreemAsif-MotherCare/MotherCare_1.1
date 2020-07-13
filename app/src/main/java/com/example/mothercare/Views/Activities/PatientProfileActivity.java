@@ -29,9 +29,10 @@ public class PatientProfileActivity extends BaseActivity implements FirebaseUtil
         firebaseUtil.setFirebaseResponse(this);
         firebaseUtil.getPatientInfo(patientID);
 
+        showHideProgress(true , "");
         //Init
         profilePictureIV = findViewById(R.id.profilePicture);
-        name = findViewById(R.id.name);
+        name = findViewById(R.id.username);
         trimester = findViewById(R.id.trimester);
         month = findViewById(R.id.month);
         week = findViewById(R.id.week);
@@ -60,6 +61,7 @@ public class PatientProfileActivity extends BaseActivity implements FirebaseUtil
                 week.setText(String.valueOf(patient.pregnancyWeek));
                 phoneNumber.setText(patient.phoneNumber);
                 email.setText(patient.email);
+                showHideProgress(false , "");
             }
             case Error: {
                 break;
