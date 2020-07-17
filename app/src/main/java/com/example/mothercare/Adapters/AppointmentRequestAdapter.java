@@ -78,6 +78,9 @@ public class AppointmentRequestAdapter extends RecyclerView.Adapter<AppointmentR
         holder.deleteRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                firebaseUtil.deleteAppointmentRequest(appointmentRequest);
+                appointmentRequestArrayList.remove(position);
+                notifyDataSetChanged();
             }
         });
         holder.scheduleAppointment.setOnClickListener(new View.OnClickListener() {

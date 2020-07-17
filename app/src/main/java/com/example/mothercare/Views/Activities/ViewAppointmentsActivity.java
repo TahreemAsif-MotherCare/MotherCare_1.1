@@ -76,7 +76,7 @@ public class ViewAppointmentsActivity extends BaseActivity {
                 Button cancel = dialogView.findViewById(R.id.cancelRequestAppointmentDialog);
                 final Button addAppointmentRequest = dialogView.findViewById(R.id.addRequestAppointment);
                 final Spinner appointmentTypeSpinner = dialogView.findViewById(R.id.appointmentTypeSpinner);
-                String[] appointmentTypes = {"Select", "Call", "Video Call", "Visit"};
+                String[] appointmentTypes = {"Select", "Call", "Video Call", "At Clinic"};
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(ViewAppointmentsActivity.this, android.R.layout.simple_list_item_1, appointmentTypes);
                 appointmentTypeSpinner.setAdapter(adapter);
                 builder.setView(dialogView);

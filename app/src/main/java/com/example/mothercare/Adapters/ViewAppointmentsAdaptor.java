@@ -71,6 +71,8 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
                                 holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
                             } else if (appointment.getAppointmentType().equals("Call")) {
                                 holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_call));
+                            } else if (appointment.getAppointmentType().equals("At Clinic")) {
+                                holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_location_orange));
                             }
                             holder.appointmentIcon.setColorFilter(ContextCompat.getColor(context, R.color.gray), android.graphics.PorterDuff.Mode.MULTIPLY);
                         } else {
@@ -81,6 +83,8 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
                                 holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
                             } else if (appointment.getAppointmentType().equals("Call")) {
                                 holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_call));
+                            } else if (appointment.getAppointmentType().equals("At Clinic")) {
+                                holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_location_orange));
                             }
                             holder.appointmentIcon.setColorFilter(ContextCompat.getColor(context, R.color.colorPrimaryDark), android.graphics.PorterDuff.Mode.MULTIPLY);
                         }
@@ -92,6 +96,8 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
                             holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
                         } else if (appointment.getAppointmentType().equals("Call")) {
                             holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_call));
+                        } else if (appointment.getAppointmentType().equals("At Clinic")) {
+                            holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_location_orange));
                         }
                         holder.appointmentIcon.setColorFilter(ContextCompat.getColor(context, R.color.gray), android.graphics.PorterDuff.Mode.MULTIPLY);
                     }
@@ -100,6 +106,8 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
                         holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
                     } else if (appointment.getAppointmentType().equals("Call")) {
                         holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_call));
+                    } else if (appointment.getAppointmentType().equals("At Clinic")) {
+                        holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_location_orange));
                     }
                     holder.appointmentIcon.setColorFilter(ContextCompat.getColor(context, R.color.gray), android.graphics.PorterDuff.Mode.MULTIPLY);
                 }
@@ -115,17 +123,34 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
         holder.date.setText(appointment.getDate());
         holder.time.setText(appointment.getTime());
 
-        holder.appointmentIcon.setOnClickListener(new View.OnClickListener() {
+        rootRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                if (appointment.getAppointmentType().equals("Video Call")) {
-                    Uri uri = Uri.parse("smsto:" + doctorContactNumber[0]);
-                    Intent i = new Intent(Intent.ACTION_SENDTO, uri);
-                    i.setPackage("com.whatsapp");
-                    context.startActivity(Intent.createChooser(i, ""));
-                } else if (holder.appointmentIcon.getDrawable() == context.getResources().getDrawable(R.drawable.ic_call)) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                final Doctor doctor = dataSnapshot.child(appointment.getDoctorID()).getValue(Doctor.class);
+                holder.appointmentIcon.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (appointment.getAppointmentType().equals("Video Call")) {
+                            Uri uri = Uri.parse("smsto:" + doctor.phoneNumber);
+                            Intent i = new Intent(Intent.ACTION_SENDTO, uri);
+                            i.setPackage("com.whatsapp");
+                            context.startActivity(Intent.createChooser(i, ""));
+                        } else if (appointment.getAppointmentType().equals("Call")) {
+                            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + doctor.phoneNumber));
+                            context.startActivity(intent);
+                        } else if (appointment.getAppointmentType().equals("At Clinic")) {
+                            Uri gmmIntentUri = Uri.parse("google.streetview:cbll=" + doctor.getUserLocation().latitude + "," + doctor.getUserLocation().longitude);
+                            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                            mapIntent.setPackage("com.google.android.apps.maps");
+                            context.startActivity(mapIntent);
+                        }
+                    }
+                });
+            }
 
-                }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }

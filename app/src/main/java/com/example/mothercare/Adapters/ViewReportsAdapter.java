@@ -1,8 +1,10 @@
 package com.example.mothercare.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mothercare.Models.Report;
 import com.example.mothercare.R;
+import com.example.mothercare.Views.Activities.PrescriptionPicActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class ViewReportsAdapter extends RecyclerView.Adapter<ViewReportsAdapter.MyViewHolder> {
@@ -49,18 +53,28 @@ public class ViewReportsAdapter extends RecyclerView.Adapter<ViewReportsAdapter.
             holder.reportHeading.setText(report.date);
         }
 
-
         StorageReference islandRef = FirebaseStorage.getInstance().getReference().child("Reports").child(report.reportID);
         final long ONE_MEGABYTE = 1024 * 1024;
         islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                final Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 holder.reportPic.setImageBitmap(bitmap);
+                report.setReportPicture(bitmap);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
+            }
+        });
+
+        holder.reportPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in1 = new Intent(context, PrescriptionPicActivity.class);
+                in1.putExtra("ID", report.reportID);
+                in1.putExtra("type", "Image");
+                context.startActivity(in1);
             }
         });
     }

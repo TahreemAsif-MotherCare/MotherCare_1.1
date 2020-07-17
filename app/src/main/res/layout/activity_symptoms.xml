@@ -117,10 +117,23 @@
         android:foregroundGravity="center"
         android:overScrollMode="never"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@id/identifySymptoms"
+        app:layout_constraintBottom_toTopOf="@id/remainingQuestions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/answerMoreQuestions" />
+
+    <TextView
+        android:id="@+id/remainingQuestions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text=""
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/identifySymptoms"
+        app:layout_constraintEnd_toEndOf="@id/viewPager"
+        app:layout_constraintStart_toStartOf="@id/viewPager"
+        app:layout_constraintTop_toBottomOf="@id/viewPager" />
 
     <Button
         android:id="@+id/identifySymptoms"
@@ -134,6 +147,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/viewPager" />
+        app:layout_constraintTop_toBottomOf="@id/remainingQuestions" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -61,7 +61,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
             mProgressDialog = new SpotsDialog.Builder()
                     .setContext(this)
-                    .setMessage("Please Wiat")
+                    .setMessage("Please Wait")
                     .setCancelable(false)
                     .build();
             mProgressDialog.show();

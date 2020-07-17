@@ -47,11 +47,13 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
     ArrayList<String> tags = new ArrayList<>();
     ArrayList<SymptomsQuestions> questions = new ArrayList<>();
     ViewPager viewPager;
+    TextView remainingQuestions;
     ViewPagerAdapter adapter;
     SymptomsAdapter symptomsAdapter;
     SearchView editsearch;
     List<HashMap<String, Boolean>> symptomsHash = new ArrayList<>();
     RecyclerView recyclerView;
+    private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,7 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
         analyzeSymptoms = findViewById(R.id.identifySymptoms);
         recyclerView = (RecyclerView) findViewById(R.id.tagsRV);
         editsearch = (SearchView) findViewById(R.id.searchTag);
+        remainingQuestions = (TextView) findViewById(R.id.remainingQuestions);
         editsearch.setOnQueryTextListener(this);
         prepareSymptomsArrayList();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -468,7 +471,8 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
         viewPager.setAdapter((PagerAdapter) adapter);
         viewPager.setPadding(60, 20, 60, 20);
         viewPager.setVisibility(View.VISIBLE);
-
+        count = questions.size();
+        remainingQuestions.setText("Remaining Questions: " + String.valueOf(count) + "/" + questions.size());
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -483,6 +487,8 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
     public void symptomResponse(int position, String response) {
         questions.get(position).questionStatus = response;
         viewPager.setCurrentItem(position + 1);
+        count--;
+        remainingQuestions.setText("Remaining Questions: " + String.valueOf(count) + "/" + questions.size());
     }
 
     @Override

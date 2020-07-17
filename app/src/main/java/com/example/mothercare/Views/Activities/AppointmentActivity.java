@@ -23,6 +23,7 @@ public class AppointmentActivity extends BaseActivity implements FirebaseUtil.Fi
     private TextView noAppointment;
     private ViewAppointmentsAdaptor mAdapter;
     private FirebaseUtil firebaseUtil;
+    ArrayList<Appointment> appointments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class AppointmentActivity extends BaseActivity implements FirebaseUtil.Fi
     public void firebaseResponse(Object o, FirebaseResponses firebaseResponses) {
         switch (firebaseResponses) {
             case Appointments: {
-                ArrayList<Appointment> appointments = new ArrayList<>();
+                appointments = (ArrayList<Appointment>) o;
                 if (!appointments.isEmpty()) {
                     mAdapter = new ViewAppointmentsAdaptor(AppointmentActivity.this, appointments);
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -56,9 +57,11 @@ public class AppointmentActivity extends BaseActivity implements FirebaseUtil.Fi
                     recyclerView.setLayoutManager(mLayoutManager);
                     recyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
                     recyclerView.setAdapter(mAdapter);
+                    break;
                 } else {
                     noAppointment.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
+                    break;
                 }
             }
         }

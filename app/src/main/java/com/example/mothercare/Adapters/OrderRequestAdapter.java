@@ -27,7 +27,12 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 
 public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapter.MyViewHolder> {
 
@@ -60,6 +65,22 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
     public OrderRequestAdapter(Context context, ArrayList<MedicineOrder> orderArrayList) {
         this.orderArrayList = orderArrayList;
         this.context = context;
+
+        Collections.sort(this.orderArrayList, new Comparator<MedicineOrder>() {
+            @Override
+            public int compare(MedicineOrder p1, MedicineOrder p2) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date date1 = new Date();
+                Date date2 = new Date();
+                try {
+                    date1 = sdf.parse(p1.orderDate);
+                    date2 = sdf.parse(p2.orderDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                return date1.compareTo(date2); // Descending
+            }
+        });
     }
 
     @Override
@@ -106,6 +127,7 @@ public class OrderRequestAdapter extends RecyclerView.Adapter<OrderRequestAdapte
 
                 Intent in1 = new Intent(context, PrescriptionPicActivity.class);
                 in1.putExtra("image", byteArray);
+                in1.putExtra("type", "Order");
                 context.startActivity(in1);
             }
         });
