@@ -1,37 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views.Fragment.TrimesterOneFragment">
+    tools:context=".TrimesterTwoFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="15dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tri3Heading"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
-            android:textSize="17sp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tri3Desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/whatIsFirstTrimester"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="4">
 
-        <ImageView
-            android:id="@+id/tri3Image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+                <TextView
+                    style="@style/headingStyle"
+                    android:layout_weight="3"
+                    android:text="What is the third trimester"
+                    android:textColor="@color/colorPrimary" />
 
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/firstTrimesterIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:foregroundTint="@color/colorPrimary"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="@color/colorPrimary" />
+            </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="#c0c0c0" />
+
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/expandable_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:el_duration="1000"
+                app:el_expanded="true"
+                app:el_parallax="0.5">
+
+                <TextView
+                    style="@style/textStyle"
+                    android:text="@string/ttwhatis" />
+
+            </net.cachapa.expandablelayout.ExpandableLayout>
+
+            <LinearLayout
+                android:id="@+id/FTBodyChanges"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="4">
+
+                <TextView
+                    style="@style/headingStyle"
+                    android:layout_weight="3"
+                    android:text="Body Changes"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:id="@+id/bodyChangesIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:foregroundTint="@color/colorPrimary"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="@color/colorPrimary" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="#c0c0c0" />
+
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/bodyChangesEL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:el_duration="1000"
+                app:el_expanded="true"
+                app:el_parallax="0.5">
+
+                <TextView
+                    style="@style/textStyle"
+                    android:text="@string/ttbodychanges" />
+            </net.cachapa.expandablelayout.ExpandableLayout>
+
+            <LinearLayout
+                android:id="@+id/FTFetusDev"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="4">
+
+                <TextView
+                    style="@style/headingStyle"
+                    android:layout_weight="3"
+                    android:text="Fetus Development"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:id="@+id/fetusDevIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:foregroundTint="@color/colorPrimary"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="@color/colorPrimary" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="#c0c0c0" />
+
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/fetusDevEL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:el_duration="1000"
+                app:el_expanded="true"
+                app:el_parallax="0.5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/headingStyle"
+                        android:text="What happens to the fetus during the third trimester?" />
+
+                    <TextView
+                        style="@style/subHeadingStyle"
+                        android:text="WEEK 32," />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="your baby’s bones are fully formed. The baby can now open and close its eyes and sense light. The baby’s body will begin to store minerals like iron and calcium." />
+
+                    <TextView
+                        style="@style/subHeadingStyle"
+                        android:text="WEEK 36," />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="The baby should be in a head down position. If the baby does not move into this position, your doctor may try to move the baby’s position or recommend that you give birth by a cesarean section. This is when the doctor makes a cut in the mother’s belly and uterus in order to deliver the baby." />
+
+                    <TextView
+                        style="@style/subHeadingStyle"
+                        android:text="WEEK 37," />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="Your baby is considered full term and its organs are ready to function on their own. According to the Office on Women’s Health, the baby is now around 19 to 21 inches long and probably weighs between 6 and 9 pounds." />
+
+
+                </LinearLayout>
+            </net.cachapa.expandablelayout.ExpandableLayout>
+
+            <LinearLayout
+                android:id="@+id/FTWhatToDo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="4">
+
+                <TextView
+                    style="@style/headingStyle"
+                    android:layout_weight="3"
+                    android:text="What To Do"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:id="@+id/whatToDoIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:foregroundTint="@color/colorPrimary"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="@color/colorPrimary" />
+            </LinearLayout>
+
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/whatToDoEL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:el_duration="1000"
+                app:el_expanded="true"
+                app:el_parallax="0.5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/headingStyle"
+                        android:text="Doctor consultation:" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/ttdoctorconsultation" />
+
+                    <TextView
+                        style="@style/headingStyle"
+                        android:text="How can you stay healthy during the third trimester?" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/ttstayhealthy" />
+
+                    <TextView
+                        style="@style/subHeadingStyle"
+                        android:text="What to do?" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/ttwhattodo" />
+
+                    <TextView
+                        style="@style/subHeadingStyle"
+                        android:text="What to avoid?" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/ttwhattoavoid" />
+
+                    <TextView
+                        style="@style/headingStyle"
+                        android:text="What can you do during the third trimester to prepare for birth?" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/ttprepareforbirth" />
+                </LinearLayout>
+            </net.cachapa.expandablelayout.ExpandableLayout>
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>

@@ -1,20 +1,27 @@
 package com.example.mothercare.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mothercare.Models.Appointment;
+import com.example.mothercare.Models.Doctor;
 import com.example.mothercare.R;
 import com.example.mothercare.Utilities.FirebaseUtil;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,6 +53,8 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         final Appointment appointment = appointmentList.get(position);
+        final String[] doctorContactNumber = {""};
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference("Doctors");
         try {
             SimpleDateFormat formatter6 = new SimpleDateFormat("dd-mm-YYYY hh:mm");
             Date appointmentDate = formatter6.parse(appointment.getDate() + " " + appointment.getTime());
@@ -109,39 +118,14 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
         holder.appointmentIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (holder.appointmentIcon.getDrawable() == context.getResources().getDrawable(R.drawable.ic_video_call)) {
-                    Toast.makeText(context, "Coming Soon", Toast.LENGTH_SHORT).show();
+                if (appointment.getAppointmentType().equals("Video Call")) {
+                    Uri uri = Uri.parse("smsto:" + doctorContactNumber[0]);
+                    Intent i = new Intent(Intent.ACTION_SENDTO, uri);
+                    i.setPackage("com.whatsapp");
+                    context.startActivity(Intent.createChooser(i, ""));
                 } else if (holder.appointmentIcon.getDrawable() == context.getResources().getDrawable(R.drawable.ic_call)) {
 
                 }
-                /*String contactNumber = "03125779969"; // to change with real value
-                Cursor cursor = context.getContentResolver()
-                        .query(
-                                ContactsContract.Data.CONTENT_URI,
-                                new String[]{ContactsContract.Data._ID},
-                                ContactsContract.RawContacts.ACCOUNT_TYPE + " = 'com.whatsapp' " +
-                                        "AND " + ContactsContract.Data.MIMETYPE + " = 'vnd.android.cursor.item/vnd.com.whatsapp.video.call' " +
-                                        "AND " + ContactsContract.CommonDataKinds.Phone.NUMBER + " LIKE '%" + contactNumber + "%'",
-                                null,
-                                ContactsContract.Contacts.DISPLAY_NAME
-                        );
-                if (cursor == null) {
-                    // throw an exception
-                }
-                long id = -1;
-                while (cursor.moveToNext()) {
-                    id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Data._ID));
-                }
-                if (!cursor.isClosed()) {
-                    cursor.close();
-                }
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-
-                intent.setDataAndType(Uri.parse("content://com.android.contacts/data/" + id), "vnd.android.cursor.item/vnd.com.whatsapp.voip.call");
-                intent.setPackage("com.whatsapp");
-
-                context.startActivity(intent);*/
             }
         });
     }

@@ -93,6 +93,7 @@ public class PatientProfile extends BaseActivity implements FirebaseUtil.Firebas
             case ProfilePicture: {
                 showHideProgress(false, "");
                 patientProfilePicture.setImageBitmap((Bitmap) o);
+                break;
             }
             case SpecificPatientInformation: {
                 patient = (Patient) o;
@@ -110,6 +111,7 @@ public class PatientProfile extends BaseActivity implements FirebaseUtil.Firebas
                 } finally {
                     firebaseUtil.getProfilePicture("Patient", patient.patientID);
                 }
+                break;
             }
             case Error: {
                 Log.d("Error", "firebaseResponse: " + o.toString());

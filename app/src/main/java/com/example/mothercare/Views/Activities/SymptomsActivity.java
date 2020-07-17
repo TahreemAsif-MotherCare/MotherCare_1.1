@@ -1,6 +1,7 @@
 package com.example.mothercare.Views.Activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.mothercare.Adapters.SymptomsAdapter;
 import com.example.mothercare.Adapters.ViewPagerAdapter;
 import com.example.mothercare.BaseActivity;
@@ -334,7 +341,7 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
 
                     //showAlertDialog("Request", jsonObject.toString());
                     ////////////////////////////////////////////////////////////////////////////////
-                    /*RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+                    RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
                     String url = "http://192.168.10.2:5002/predict";
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
                             new Response.Listener<JSONObject>() {
@@ -342,7 +349,9 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
                                 public void onResponse(JSONObject response) {
                                     try {
                                         showHideProgress(false, "");
-                                        showAlertDialog("Symptom Analyzer Result", "Symptom analyzer has analyzed that: " + response.getString("msg"));
+                                        Intent intent = new Intent(SymptomsActivity.this, SymptomsOutputActivity.class);
+                                        intent.putExtra("output", "Symptom analyzer has analyzed that: " + response.getString("msg"));
+                                        startActivity(intent);
                                     } catch (JSONException e) {
                                         showHideProgress(false, "Please Wait");
                                         e.printStackTrace();
@@ -357,7 +366,7 @@ public class SymptomsActivity extends BaseActivity implements ViewPagerAdapter.S
                     });
                     requestQueue.add(jsonObjectRequest);
                     ////////////////////////////////////////////////////////////////////////////////
-*/
+
                 } catch (Exception e) {
                     showHideProgress(false, "Please Wait");
                     showAlertDialog("Error", e.getLocalizedMessage());

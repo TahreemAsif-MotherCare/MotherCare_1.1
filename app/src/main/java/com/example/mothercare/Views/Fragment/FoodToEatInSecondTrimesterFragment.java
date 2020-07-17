@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.mothercare.R;
-import com.example.mothercare.Views.Activities.InformationActivity;
+import com.example.mothercare.Views.Activities.webCrawler.InformationActivity;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -36,5 +36,60 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorButtonNormal">@color/colorPrimaryDark</item>
         <item name="colorControlHighlight">@color/colorAccent</item>
+    </style>
+
+
+    <style name="headingStyle">
+
+        <item name="android:layout_width">match_parent</item>
+
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:textSize">18sp</item>
+
+        <item name="android:textColor">#000</item>
+
+        <item name="android:padding">10dp</item>
+
+        <item name="android:justificationMode" tools:targetApi="o">inter_word</item>
+
+        <item name="android:textStyle">bold</item>
+
+    </style>
+
+
+    <style name="subHeadingStyle">
+
+        <item name="android:layout_width">match_parent</item>
+
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:textSize">16sp</item>
+
+        <item name="android:textColor">#000</item>
+
+        <item name="android:justificationMode" tools:targetApi="o">inter_word</item>
+
+        <item name="android:padding">10dp</item>
+
+        <item name="android:textStyle">bold</item>
+
+    </style>
+
+
+    <style name="textStyle">
+
+        <item name="android:layout_width">match_parent</item>
+
+        <item name="android:layout_height">wrap_content</item>
+
+        <item name="android:padding">20dp</item>
+
+        <item name="android:justificationMode" tools:targetApi="o">inter_word</item>
+
+        <item name="android:textSize">15sp</item>
+
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
+
     </style>
 </resources>

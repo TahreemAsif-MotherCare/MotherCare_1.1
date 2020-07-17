@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/headingStyle"
+                android:text="How will I know when labour has started?" />
+
+            <TextView
+                style="@style/textStyle"
+                android:text="This is a common worry for first-time mums, but there are some signs that labour may be starting." />
+
+            <TextView
+                style="@style/textStyle"
+                android:text="If your pregnancy is considered high risk or you are less the 37 weeks pregnant, contact your maternity unit if you think labour has started or if there is anything you’re worried about." />
+
+            <TextView
+                style="@style/textStyle"
+                android:text="@string/labour_exp" />
+
+            <TextView
+                style="@style/textStyle"
+                android:text="@string/call_your_midwife_birth_centre_or_hospital_labour_ward_and_tell_them_what_s_happening_the_start_of_labour_is_called_the_latent_stage_and_can_last_hours_or_for_some_women_days_if_you_are_more_than_37_weeks_with_an_uncomplicated_pregnancy_you_ll_probably_be_advised_to_stay_at_home_until_your_labour_is_established_this_is_when_your_cervix_opens_dilates_to_at_least_4cm_and_your_contractions_become_stronger_and_more_regular" />
+
+            <TextView
+                style="@style/textStyle"
+                android:text="@string/once_labour_gets_going_your_contractions_will_become_more_regular_and_won_t_go_away_call_your_midwife_birth_centre_or_hospital_labour_ward_when_you_are_having_a_contraction_every_5_minutes_that_last_30_60_seconds_if_you_have_chosen_a_home_birth_the_midwife_will_come_to_you_if_this_is_not_your_first_baby_or_you_are_likely_to_have_a_quick_labour_your_midwife_may_advise_you_to_call_earlier_than_this" />
+
+            <TextView
+                style="@style/textStyle"
+                android:text="@string/call_the_labour_ward_or_your_midwife_if_you_re_still_not_sure_whether_you_re_in_labour_they_are_used_to_dealing_with_false_alerts_so_don_t_worry_about_wasting_anyone_s_time" />
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

@@ -1,37 +1,338 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Views.Fragment.TrimesterOneFragment">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="15dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/triHeading"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
-            android:textSize="17sp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/triDesc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/whatIsFirstTrimester"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="4">
 
-        <ImageView
-            android:id="@+id/triImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+                <TextView
+                    style="@style/headingStyle"
+                    android:layout_weight="3"
+                    android:text="What is the first trimester? (12 weeks)"
+                    android:textColor="@color/colorPrimary" />
 
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/firstTrimesterIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:foregroundTint="@color/colorPrimary"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="@color/colorPrimary" />
+            </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="#c0c0c0" />
+
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/expandable_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:el_duration="1000"
+                app:el_expanded="true"
+                app:el_parallax="0.5">
+
+                <TextView
+                    android:id="@+id/firtTrimesterEL"
+                    style="@style/textStyle"
+                    android:text="@string/whatis"
+                    tools:targetApi="o" />
+
+            </net.cachapa.expandablelayout.ExpandableLayout>
+
+            <LinearLayout
+                android:id="@+id/FTBodyChanges"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="4">
+
+                <TextView
+                    style="@style/headingStyle"
+                    android:layout_weight="3"
+                    android:text="Body Changes"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:id="@+id/bodyChangesIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:foregroundTint="@color/colorPrimary"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="@color/colorPrimary" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="#c0c0c0" />
+
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/bodyChangesEL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:el_duration="1000"
+                app:el_expanded="true"
+                app:el_parallax="0.5">
+
+                <TextView
+                    style="@style/textStyle"
+                    android:text="@string/ftbodychanges" />
+            </net.cachapa.expandablelayout.ExpandableLayout>
+
+            <LinearLayout
+                android:id="@+id/FTFetusDev"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="4">
+
+                <TextView
+                    style="@style/headingStyle"
+                    android:layout_weight="3"
+                    android:text="Fetus Development"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:id="@+id/fetusDevIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:foregroundTint="@color/colorPrimary"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="@color/colorPrimary" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="#c0c0c0" />
+
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/fetusDevEL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:el_duration="1000"
+                app:el_expanded="false"
+                app:el_parallax="0.5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/headingStyle"
+                        android:text="Fetus Development " />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/the_first_day_of_your_pregnancy_is_also_the_first_day_of_your_last_menstrual_period_at_about_10_to_14_days_after_an_egg_is_released_combines_with_a_sperm_and_conception_occurs" />
+
+                    <TextView
+                        style="@style/subHeadingStyle"
+                        android:text="DURING 1ST TRIMESTER" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/about_a_week_after_conception_between_days_seven_and_10_the_fertilized_ovum_attaches_to_the_lining_of_the_uterus_and_the_placenta_starts_to_form_by_about_two_weeks_when_you_miss_your_first_period_the_embryo_becomes_a_layered_disc_on_the_uterine_wall_as_shown_below_by_about_four_weeks_major_body_systems_are_starting_to_develop" />
+
+                    <TextView
+                        style="@style/subHeadingStyle"
+                        android:text="DEVELOPMENT ACCORDING TO WEEKS IN FIRST TRIMESTER" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/fourweeks" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="4 Weeks"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="The embryo’s eyes, ears, nose, spine, digestive tract and nervous system are beginning to form. The tube for the future heart starts beating." />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/eightweeks" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="8 Weeks"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="The fetus now has all the organs that a full term baby will have. The heart is functioning. Bones begin to form." />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/twelveweeks" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="12 Weeks"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/tooth_buds_are_present_fingernails_and_toenails_are_forming_immature_kidneys_secrete_urine_to_the_bladder_external_genitalia_are_forming_the_fetus_can_now_move_in_the_amniotic_fluid_but_you_can_t_feel_it_your_healthcare_provider_may_be_able_to_hear_the_fetal_heart_rate_with_an_electronic_listening_device" />
+
+                    <TextView
+                        style="@style/subHeadingStyle"
+                        android:text="The first trimester: a critical time for healthy choices" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/the_first_three_months_of_pregnancy_the_first_trimester_is_a_critical_time_your_baby_is_growing_and_developing_rapidly_and_is_most_at_risk_from_hazards_such_as_smoking_alcohol_drugs_infections_and_x_rays_by_the_end_of_the_first_trimester_all_your_baby_s_organs_will_be_formed_and_functioning" />
+
+                </LinearLayout>
+            </net.cachapa.expandablelayout.ExpandableLayout>
+
+            <LinearLayout
+                android:id="@+id/FTWhatToDo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="5dp"
+                android:weightSum="4">
+
+                <TextView
+                    style="@style/headingStyle"
+                    android:layout_weight="3"
+                    android:text="What To Do"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:id="@+id/whatToDoIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:foregroundTint="@color/colorPrimary"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="@color/colorPrimary" />
+            </LinearLayout>
+
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/whatToDoEL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:el_duration="1000"
+                app:el_expanded="false"
+                app:el_parallax="0.5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/headingStyle"
+                        android:text="Doctor consultation:" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/ftdoctorconsultation" />
+
+                    <TextView
+                        style="@style/headingStyle"
+                        android:text="How can I stay healthy during the first trimester?" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/it_s_important_for_a_woman_to_be_aware_of_what_to_do_and_what_to_avoid_while_pregnant_in_order_to_take_care_of_themselves_and_their_developing_baby" />
+
+                    <TextView
+                        style="@style/subHeadingStyle"
+                        android:text="What to do?" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/ftwhattodo" />
+
+                    <TextView
+                        style="@style/subHeadingStyle"
+                        android:text="What to avoid?" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/ftwhattoavoid" />
+
+                    <TextView
+                        style="@style/subHeadingStyle"
+                        android:text="What else should be considered during the first trimester?" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/ftwhatelsetoavoid" />
+
+                    <TextView
+                        style="@style/headingStyle"
+                        android:text="If you have a high-risk pregnancy" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/ftifyouhaveahighriskpregnancy" />
+                </LinearLayout>
+            </net.cachapa.expandablelayout.ExpandableLayout>
+
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>

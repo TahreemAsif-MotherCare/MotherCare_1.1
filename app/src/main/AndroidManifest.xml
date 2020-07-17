@@ -24,7 +24,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".Views.Activities.PatientProfileActivity"></activity>
+        <activity android:name=".Views.Activities.SymptomsOutputActivity"></activity>
+        <activity android:name=".Views.Activities.PatientProfileActivity" />
         <activity android:name=".Views.Activities.EmergencyActivity" />
         <activity android:name=".Views.Activities.PrescriptionPicActivity" />
         <activity android:name=".Views.Activities.OrderRequestsActivity" />
@@ -50,7 +51,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/places_api_key" />
 
-        <activity android:name=".Views.Activities.InformationActivity" />
+        <activity android:name=".Views.Activities.webCrawler.InformationActivity" />
         <activity android:name=".Views.Activities.DoctorChatActivity" />
         <activity android:name=".Views.Activities.PatientChatActivity" />
         <activity android:name=".Views.Activities.DiscussionActivity" />

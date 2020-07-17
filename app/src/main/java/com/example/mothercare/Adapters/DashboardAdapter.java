@@ -21,7 +21,6 @@ import com.example.mothercare.Views.Activities.AppointmentActivity;
 import com.example.mothercare.Views.Activities.DashboardActivity;
 import com.example.mothercare.Views.Activities.DiscussionActivity;
 import com.example.mothercare.Views.Activities.FindDoctor;
-import com.example.mothercare.Views.Activities.InformationActivity;
 import com.example.mothercare.Views.Activities.MedicineRemindersActivity;
 import com.example.mothercare.Views.Activities.OrderHistoryActivity;
 import com.example.mothercare.Views.Activities.OrderRequestsActivity;
@@ -31,6 +30,7 @@ import com.example.mothercare.Views.Activities.SymptomsActivity;
 import com.example.mothercare.Views.Activities.ViewAppointmentRequests;
 import com.example.mothercare.Views.Activities.ViewAppointmentsActivity;
 import com.example.mothercare.Views.Activities.YourDoctor;
+import com.example.mothercare.Views.Activities.webCrawler.InformationActivity;
 
 import java.util.List;
 

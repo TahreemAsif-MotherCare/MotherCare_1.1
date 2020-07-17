@@ -1,21 +1,15 @@
-package com.example.mothercare.Views.Activities;
+package com.example.mothercare.Views.Activities.webCrawler;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.mothercare.BaseActivity;
-import com.example.mothercare.Views.Fragment.FoodToEatInFirstTrimesterFragment;
-import com.example.mothercare.Views.Fragment.FoodToEatInSecondTrimesterFragment;
-import com.example.mothercare.Views.Fragment.FoodToEatInThirdTrimesterFragment;
 import com.example.mothercare.R;
-import com.example.mothercare.Views.Fragment.TrimesterOneFragment;
-import com.example.mothercare.Views.Fragment.TrimesterThreeFragment;
-import com.example.mothercare.Views.Fragment.TrimesterTwoFragment;
-
 
 public class InformationActivity extends BaseActivity {
 
@@ -24,6 +18,7 @@ public class InformationActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_information);
 
         ViewPager vpPager = (ViewPager) findViewById(R.id.vpPager);
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
@@ -35,9 +30,8 @@ public class InformationActivity extends BaseActivity {
         return R.layout.activity_information;
     }
 
-
     public static class MyPagerAdapter extends FragmentPagerAdapter {
-        private static int NUM_ITEMS = 6;
+        private static int NUM_ITEMS = 4;
 
         public MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
@@ -58,11 +52,7 @@ public class InformationActivity extends BaseActivity {
                 case 2:
                     return TrimesterThreeFragment.newInstance();
                 case 3:
-                    return FoodToEatInFirstTrimesterFragment.newInstance();
-                case 4:
-                    return FoodToEatInSecondTrimesterFragment.newInstance();
-                case 5:
-                    return FoodToEatInThirdTrimesterFragment.newInstance();
+                    return LabourAndBirthFragment.newInstance();
                 default:
                     return null;
             }
@@ -78,16 +68,11 @@ public class InformationActivity extends BaseActivity {
                 case 2:
                     return "Trimester 3";
                 case 3:
-                    return "Food To Eat In First Trimester Fragment";
-                case 4:
-                    return "Food To Eat In Second Trimester Fragment";
-                case 5:
-                    return "Food To Eat In Third Trimester Fragment";
+                    return "Labour and Birth";
                 default:
                     return null;
             }
         }
 
     }
-
 }

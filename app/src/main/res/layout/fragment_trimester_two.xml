@@ -1,37 +1,309 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Views.Fragment.TrimesterOneFragment">
+    tools:context=".TrimesterTwoFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="15dp">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tri2Heading"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
-            android:textSize="17sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tri2Desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#000"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/whatIsFirstTrimester"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:weightSum="4">
 
-        <ImageView
-            android:id="@+id/tri2Image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+                <TextView
+                    style="@style/headingStyle"
+                    android:layout_weight="3"
+                    android:text="What is the second trimester"
+                    android:textColor="@color/colorPrimary" />
 
-    </LinearLayout>
+                <ImageView
+                    android:id="@+id/firstTrimesterIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:foregroundTint="@color/colorPrimary"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="@color/colorPrimary" />
+            </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="#c0c0c0" />
+
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/expandable_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:el_duration="1000"
+                app:el_expanded="false"
+                app:el_parallax="0.5">
+
+                <TextView
+                    style="@style/textStyle"
+                    android:text="@string/stwhatis" />
+            </net.cachapa.expandablelayout.ExpandableLayout>
+
+            <LinearLayout
+                android:id="@+id/FTBodyChanges"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:weightSum="4">
+
+                <TextView
+                    style="@style/headingStyle"
+                    android:layout_weight="3"
+                    android:text="Body Changes"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:id="@+id/bodyChangesIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:foregroundTint="@color/colorPrimary"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="@color/colorPrimary" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="#c0c0c0" />
+
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/bodyChangesEL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:el_duration="1000"
+                app:el_expanded="false"
+                app:el_parallax="0.5">
+
+                <TextView
+                    style="@style/textStyle"
+                    android:text="@string/stbodychanges" />
+            </net.cachapa.expandablelayout.ExpandableLayout>
+
+            <LinearLayout
+                android:id="@+id/FTFetusDev"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:weightSum="4">
+
+                <TextView
+                    style="@style/headingStyle"
+                    android:layout_weight="3"
+                    android:text="Fetus Development"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:id="@+id/fetusDevIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:foregroundTint="@color/colorPrimary"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="@color/colorPrimary" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="#c0c0c0" />
+
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/fetusDevEL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:el_duration="1000"
+                app:el_expanded="false"
+                app:el_parallax="0.5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/stfetusdevelopment" />
+
+                    <TextView
+                        style="@style/subHeadingStyle"
+                        android:text="Here’s a more detailed look at development in the second trimester:" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/sixteenweeks" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="16 Weeks"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="Events: Baby’s face looks more human, the head has hair, the ears stand out and your voice can be heard" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/seventeenweeks" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="17 Weeks"
+                        android:textAlignment="center" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="17 weeks: The developing baby begins to store some of your antibodies. A vaginal birth also helps your baby's immune system develop as important bacteria from your gut is transferred to your baby." />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/_20_weeks_eyebrows_and_eyelashes_appear_a_fine_downy_hair_lanugo_appears_all_over_the_baby_s_body_and_may_be_present_at_birth_the_skin_is_thin_shiny_and_covered_with_a_creamy_protective_coating_called_vernix_oil_glands_appear_the_baby_s_legs_lengthen_and_move_well_teeth_develop_enamel_and_dentine_are_being_formed_this_can_begin_as_early_as_14_weeks_by_the_end_of_the_fifth_month_baby_is_about_half_the_length_of_a_newborn_meconium_baby_s_first_poop_begins_to_appear_in_the_intestines" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="24 weeks: Sweat glands form. The baby has a lean body with red wrinkled skin. Early breathing movements begin. A substance called surfactant is formed in the lungs to help them expand normally after the baby is born." />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="26 weeks: The baby’s outline may be felt through your abdomen. The eyes may be open now." />
+
+
+                    <TextView
+                        style="@style/subHeadingStyle"
+                        android:text="Ultrasounds" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="Ultrasounds can check your baby’s size and position and estimate your due date. For more information about ultrasounds during pregnancy." />
+
+                </LinearLayout>
+            </net.cachapa.expandablelayout.ExpandableLayout>
+
+            <LinearLayout
+                android:id="@+id/FTWhatToDo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:weightSum="4">
+
+                <TextView
+                    style="@style/headingStyle"
+                    android:layout_weight="3"
+                    android:text="What To Do"
+                    android:textColor="@color/colorPrimary" />
+
+                <ImageView
+                    android:id="@+id/whatToDoIV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:foregroundTint="@color/colorPrimary"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_add"
+                    android:tint="@color/colorPrimary" />
+            </LinearLayout>
+
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/whatToDoEL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:el_duration="1000"
+                app:el_expanded="true"
+                app:el_parallax="0.5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/headingStyle"
+                        android:text="Doctor consultation:" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/stdoctorconsultation" />
+
+                    <TextView
+                        style="@style/headingStyle"
+                        android:text="How can you stay healthy during the second trimester?" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="It’s important to be aware of what to do and what to avoid as your pregnancy continues. This will help you take care of yourself and your developing baby." />
+
+                    <TextView
+                        style="@style/subHeadingStyle"
+                        android:text="What to do?" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/stwhattodo" />
+
+                    <TextView
+                        style="@style/subHeadingStyle"
+                        android:text="What to avoid?" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/stwhattoavoid" />
+
+                    <TextView
+                        style="@style/headingStyle"
+                        android:text="What can you do during the second trimester to prepare for birth?" />
+
+                    <TextView
+                        style="@style/textStyle"
+                        android:text="@string/stprepareforbirth" />
+                </LinearLayout>
+            </net.cachapa.expandablelayout.ExpandableLayout>
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>

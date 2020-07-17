@@ -12,12 +12,13 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.example.mothercare.R;
-import com.example.mothercare.Views.Activities.InformationActivity;
+import com.example.mothercare.Views.Activities.webCrawler.InformationActivity;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class FoodToEatInThirdTrimesterFragment extends Fragment {
     public TextView thirdTrimesterFoodHeading, thirdTrimesterFoodDescription;
@@ -36,7 +37,7 @@ public class FoodToEatInThirdTrimesterFragment extends Fragment {
         thirdTrimesterFoodHeading = view.findViewById(R.id.thirdTrimesterFoodHeading);
         thirdTrimesterFoodDescription = view.findViewById(R.id.thirdTrimesterFoodDesc);
         thirdTrimesterFoodImage = view.findViewById(R.id.thirdTrimesterFoodImage);
-        ((InformationActivity) getActivity()).showHideProgress(true, "Please Wait");
+        ((InformationActivity) Objects.requireNonNull(getActivity())).showHideProgress(true, "Please Wait");
         new myTask().execute();
         return view;
     }
