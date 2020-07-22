@@ -7,6 +7,7 @@ public class Patient {
     public Bitmap profilePic;
     public int pregnancyMonth = 0;
     public int trimester = 0;
+    private String address;
     public int pregnancyWeek = 0;
 
     public Patient() {
@@ -32,5 +33,13 @@ public class Patient {
 
     public void setPatientID(String patientID) {
         this.patientID = patientID;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

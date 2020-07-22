@@ -134,7 +134,18 @@
                 android:id="@+id/appointmentIcon"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:src="@drawable/ic_call" />
+                android:src="@drawable/ic_call"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:visibility="gone" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

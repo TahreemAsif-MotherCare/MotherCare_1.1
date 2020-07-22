@@ -133,7 +133,9 @@ public class SignupActivity extends BaseActivity {
                 if (validateUserInfo()) {
                     FirebaseUtil firebaseUtil = new FirebaseUtil(SignupActivity.this);
                     if (userRole.getSelectedItem().equals("Patient")) {
-                        firebaseUtil.signUpPatient(getPatientData(), password.getText().toString());
+                        Patient patient = getPatientData();
+                        patient.setAddress(address.getText().toString());
+                        firebaseUtil.signUpPatient(patient, password.getText().toString());
                         showHideProgress(true, "Please Wait");
                     } else if (userRole.getSelectedItem().equals("Doctor")) {
                         firebaseUtil.signUpDoctor(getDoctorData(), password.getText().toString());
@@ -567,6 +569,10 @@ public class SignupActivity extends BaseActivity {
         } else if (password.getText().toString().isEmpty()) {
             password.setError("Password cannot be empty");
             password.requestFocus();
+            return false;
+        } else if (address.getText().toString().isEmpty()) {
+            address.setError("Address cannot be empty");
+            address.requestFocus();
             return false;
         } else if (password.getText().toString().length() < 8) {
             password.setError("Password cannot be less than 8 characters");

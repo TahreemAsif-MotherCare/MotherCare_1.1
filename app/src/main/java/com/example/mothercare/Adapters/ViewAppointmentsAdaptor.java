@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mothercare.Models.Appointment;
 import com.example.mothercare.Models.Doctor;
+import com.example.mothercare.Models.Patient;
 import com.example.mothercare.R;
 import com.example.mothercare.Utilities.FirebaseUtil;
 import com.google.firebase.database.DataSnapshot;
@@ -69,8 +70,8 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
                             }
                             if (appointment.getAppointmentType().equals("Video Call")) {
                                 holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
-                            } else if (appointment.getAppointmentType().equals("Call")) {
-                                holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_call));
+                            } else if (appointment.getAppointmentType().equals("Home Appointment")) {
+                                holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_view));
                             } else if (appointment.getAppointmentType().equals("At Clinic")) {
                                 holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_location_orange));
                             }
@@ -81,8 +82,8 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
                             }
                             if (appointment.getAppointmentType().equals("Video Call")) {
                                 holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
-                            } else if (appointment.getAppointmentType().equals("Call")) {
-                                holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_call));
+                            } else if (appointment.getAppointmentType().equals("Home Appointment")) {
+                                holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_view));
                             } else if (appointment.getAppointmentType().equals("At Clinic")) {
                                 holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_location_orange));
                             }
@@ -94,8 +95,8 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
                         }
                         if (appointment.getAppointmentType().equals("Video Call")) {
                             holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
-                        } else if (appointment.getAppointmentType().equals("Call")) {
-                            holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_call));
+                        } else if (appointment.getAppointmentType().equals("Home Appointment")) {
+                            holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_view));
                         } else if (appointment.getAppointmentType().equals("At Clinic")) {
                             holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_location_orange));
                         }
@@ -104,8 +105,8 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
                 } else {
                     if (appointment.getAppointmentType().equals("Video Call")) {
                         holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_video_call));
-                    } else if (appointment.getAppointmentType().equals("Call")) {
-                        holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_call));
+                    } else if (appointment.getAppointmentType().equals("Home Appointment")) {
+                        holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_view));
                     } else if (appointment.getAppointmentType().equals("At Clinic")) {
                         holder.appointmentIcon.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_location_orange));
                     }
@@ -135,9 +136,23 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
                             Intent i = new Intent(Intent.ACTION_SENDTO, uri);
                             i.setPackage("com.whatsapp");
                             context.startActivity(Intent.createChooser(i, ""));
-                        } else if (appointment.getAppointmentType().equals("Call")) {
-                            Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + doctor.phoneNumber));
-                            context.startActivity(intent);
+                        } else if (appointment.getAppointmentType().equals("Home Appointment")) {
+                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Patient").child(appointment.getPatientID());
+                            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    Patient patient = dataSnapshot.getValue(Patient.class);
+                                    holder.appointmentIcon.setVisibility(View.GONE);
+                                    holder.address.setVisibility(View.VISIBLE);
+                                    holder.address.setText(patient.getAddress());
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
                         } else if (appointment.getAppointmentType().equals("At Clinic")) {
                             Uri gmmIntentUri = Uri.parse("google.streetview:cbll=" + doctor.getUserLocation().latitude + "," + doctor.getUserLocation().longitude);
                             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
@@ -166,7 +181,7 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, type, date, time;
+        public TextView title, type, date, time, address;
         public ImageView appointmentIcon;
 
         public MyViewHolder(View view) {
@@ -175,6 +190,7 @@ public class ViewAppointmentsAdaptor extends RecyclerView.Adapter<ViewAppointmen
             type = (TextView) view.findViewById(R.id.appointmentType);
             date = (TextView) view.findViewById(R.id.viewAppointmentDate);
             time = (TextView) view.findViewById(R.id.viewAppointmentTime);
+            address = (TextView) view.findViewById(R.id.address);
             appointmentIcon = (ImageView) view.findViewById(R.id.appointmentIcon);
 
         }
